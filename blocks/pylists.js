@@ -28,6 +28,20 @@ goog.provide('Blockly.Blocks.pylists');
 
 goog.require('Blockly.Blocks');
 
+Blockly.Blocks['python_list_empty'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("[]");
+    this.setInputsInline(true);
+    this.setTypeVecs([
+      ["*matching"],
+    ]);
+    this.setOutput(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
 
 Blockly.Blocks['python_list_index'] = {
   init: function() {

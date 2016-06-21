@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Blockly Demo: Resizable Blockly (Part 2)</title>
+  <title>PythonBlocks Demo</title>
   <script src="../../blockly_uncompressed.js"></script>
   <script src="../../msg/js/en.js"></script>
   <script src="../../blocks/pynumeric.js"></script>
@@ -39,12 +39,12 @@
 </head>
 <body>
   <table>
-    <tr>
+  <!--  <tr>
       <td>
         <h1>PythonBlocks</h1>
 
        </td>
-    </tr>
+    </tr> -->
     <tr>
       <td id="blocklyArea">
       </td>
@@ -54,25 +54,25 @@
   <div id="blocklyDiv" style="position: absolute"></div>
 
   <xml id="toolbox" style="display: none">
-    <category name="Test">
+  <!--  <category name="Test">
       <block type="python_for"></block>
       <block type="python_assign_float_list"></block>
       <block type="python_while"></block>
       <block type="python_int"></block>
       <block type="python_float_const"></block>
       <block type="python_string_const"></block>
-      <block type="python_intvar"></block>
+      <block type="python_intvar2"></block>
       <block type="python_equals"></block>
       <block type="python_pow"></block>
       <block type="python_abs"></block>
       <block type="python_plus"></block>
       <block type="python_divide"></block>
-      <block type="python_assign_intvar"></block>
+      <block type="python_assign_intvar2"></block>
       <block type="python_assign_floatvar"></block>
       <block type="python_print"></block>
       <block type="python_list_index"></block>
       <block type="python_list_const"></block>
-    </category>
+    </category> -->
     <category name="Numeric">
       <block type="python_int_const"></block>
       <block type="python_float_const"></block>
@@ -131,7 +131,6 @@
       <block type="python_less_than_or_equal"></block>
       <block type="python_greater_than"></block>
       <block type="python_greater_than_or_equal"></block>
-      <block type="python_less_than"></block>
     </category>
     <category name="Booleans">
       <block type="python_true"></block>
@@ -141,6 +140,7 @@
       <block type="python_not"></block>
     </category>
     <category name="Lists">
+      <block type="python_list_empty"></block>
       <block type="python_list_const"></block>
       <block type="python_list_concat"></block>
       <block type="python_list_repeat"></block>
@@ -168,6 +168,7 @@
     <category name="Input/Output">
       <block type="python_input"></block>
       <block type="python_print"></block>
+      <block type="python_print2"></block>
     </category>
     <category name="Control">
       <block type="python_if"></block>
@@ -178,13 +179,17 @@
       <block type="python_range3"></block>
     </category>
     <category name="Variables">
-      <block type="python_intvar"></block>
-      <block type="python_assign_intvar"></block>
       <block type="python_floatvar"></block>
       <block type="python_assign_floatvar"></block>
+      <block type="python_floatvar2"></block>
+      <block type="python_assign_floatvar2"></block>
+      <block type="python_intvar2"></block>
+      <block type="python_assign_intvar2"></block>
+    </category>
+    <category name=" List Variables">
+      <block type="python_float_list"></block>
       <block type="python_assign_float_list"></block>
       <block type="python_assign_float_list_index"></block>
-      <block type="python_float_list_append"></block>
     </category>
   </xml>
   <script>
