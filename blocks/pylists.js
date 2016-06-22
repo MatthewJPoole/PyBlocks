@@ -76,6 +76,45 @@ Blockly.Blocks['python_list_const'] = {
   }
 };
 
+Blockly.Blocks['python_list_const2'] = {
+  init: function() {
+    this.appendValueInput("ARG1")
+        .appendField("[");
+    this.appendValueInput("ARG2")
+        .appendField(", ");
+    this.appendDummyInput()
+        .appendField("]");
+    this.setInputsInline(true);
+    this.setTypeVecs([
+      ["matching", "matching", "*matching"],
+    ]);
+    this.setOutput(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['python_list_const3'] = {
+  init: function() {
+    this.appendValueInput("ARG1")
+        .appendField("[");
+    this.appendValueInput("ARG2")
+        .appendField(", ");
+    this.appendValueInput("ARG3")
+        .appendField(", ");
+    this.appendDummyInput()
+        .appendField("]");
+    this.setInputsInline(true);
+    this.setTypeVecs([
+      ["matching", "matching", "matching", "*matching"],
+    ]);
+    this.setOutput(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+
 Blockly.Blocks['python_list_concat'] = {
   init: function() {
     this.appendValueInput("LHS");
