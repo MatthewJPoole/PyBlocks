@@ -1003,6 +1003,9 @@ Blockly.Block.prototype.jsonInit = function(json) {
   if (json['inputsInline'] !== undefined) {
     this.setInputsInline(json['inputsInline']);
   }
+  if (json['typeVecs'] !== undefined) {
+    this.setTypeVecs(json['typeVecs']);
+  }
   // Set output and previous/next connections.
   if (json['output'] !== undefined) {
     this.setOutput(true, json['output']);
@@ -1032,6 +1035,7 @@ Blockly.Block.prototype.jsonInit = function(json) {
  */
 Blockly.Block.prototype.interpolate_ = function(message, args, lastDummyAlign) {
   var tokens = Blockly.tokenizeInterpolation(message);
+  console.log("TOKENS ", tokens);
   // Interpolate the arguments.  Build a list of elements.
   var indexDup = [];
   var indexCount = 0;
@@ -1047,7 +1051,7 @@ Blockly.Block.prototype.interpolate_ = function(message, args, lastDummyAlign) {
       indexCount++;
       elements.push(args[token - 1]);
     } else {
-      token = token.trim();
+      //token = token.trim();  MJP hack to add space around =
       if (token) {
         elements.push(token);
       }

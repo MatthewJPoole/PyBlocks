@@ -5,6 +5,7 @@
   <title>PythonBlocks Demo</title>
   <script src="../../blockly_uncompressed.js"></script>
   <script src="../../msg/js/en.js"></script>
+  <script src="../../blocks/variablesmerge.js"></script>
   <script src="../../blocks/pynumeric.js"></script>
   <script src="../../blocks/pystrings.js"></script>
   <script src="../../blocks/pyconversions.js"></script>
@@ -54,7 +55,10 @@
   <div id="blocklyDiv" style="position: absolute"></div>
 
   <xml id="toolbox" style="display: none">
-  <!--  <category name="Test">
+    <category name="Test">
+    <!--  <block type="variables_get"></block>
+      <block type="variables_set"></block> -->
+
       <block type="python_for"></block>
       <block type="python_assign_float_list"></block>
       <block type="python_while"></block>
@@ -180,15 +184,17 @@
       <block type="python_range2"></block>
       <block type="python_range3"></block>
     </category>
-    <category name="Variables">
+    <category name="Variables" custom="VARIABLE">
       <block type="python_floatvar"></block>
       <block type="python_assign_floatvar"></block>
       <block type="python_floatvar2"></block>
       <block type="python_assign_floatvar2"></block>
       <block type="python_intvar2"></block>
       <block type="python_assign_intvar2"></block>
+      <block type="python_floatvar3"></block>
+      <block type="python_assign_floatvar3"></block>
     </category>
-    <category name=" List Variables">
+    <category name=" List Variables" custom="VARIABLE">
       <block type="python_float_list"></block>
       <block type="python_assign_float_list"></block>
       <block type="python_assign_float_list_index"></block>
