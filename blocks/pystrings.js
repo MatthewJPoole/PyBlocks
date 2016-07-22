@@ -37,6 +37,8 @@ Blockly.Blocks['python_string_const'] = {
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
+    this.getField('VALUE').setChangeHandler(
+        Blockly.FieldTextInput.stringValidator);
   }
 };
 

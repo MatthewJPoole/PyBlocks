@@ -37,6 +37,8 @@ Blockly.Blocks['python_int_const'] = {
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
+    this.getField('VALUE').setChangeHandler(
+        Blockly.FieldTextInput.integerValidator);
   }
 };
 
@@ -49,6 +51,8 @@ Blockly.Blocks['python_float_const'] = {
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
+    this.getField('VALUE').setChangeHandler(
+        Blockly.FieldTextInput.floatValidator);
   }
 };
 
@@ -123,6 +127,37 @@ Blockly.Blocks['python_divide'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+
+Blockly.Blocks['python_int_divide'] = {
+  init: function() {
+    this.appendValueInput("LHS");
+    this.appendValueInput("RHS")
+        .appendField(" // ");
+    this.setInputsInline(true);
+    this.setTypeVecs([
+      ["int", "int", "int"]
+    ]);
+    this.setOutput(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['python_int_modulo'] = {
+  init: function() {
+    this.appendValueInput("LHS");
+    this.appendValueInput("RHS")
+        .appendField(" % ");
+    this.setInputsInline(true);
+    this.setTypeVecs([
+      ["int", "int", "int"]
+    ]);
+    this.setOutput(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
 
 Blockly.Blocks['python_pow_op'] = {
   init: function() {
