@@ -1504,6 +1504,8 @@ Blockly.Block.prototype.unifyUp = function() {
     if (child.outputConnection) {
       console.log("UNIFY child type: " + child.type);
       var position = child.outputConnection.targetConnection.inputNumber_;
+      var position2 = child.outputConnection.getInputNumber();
+      console.log("POSY ", position, position2);
       console.log("UNIFY UP", position, child.type);
       child.unifyUp();
       this.unify(child, position, -1);
@@ -1515,6 +1517,8 @@ Blockly.Block.prototype.unifyDown = function() {
   for (var i=0, child; child=this.childBlocks_[i]; i++) {
     if (child.outputConnection) {
       var position = child.outputConnection.targetConnection.inputNumber_;
+      var position2 = child.outputConnection.getInputNumber();
+      console.log("POSY ", position, position2);
       console.log("UNIFY DOWN ", position, child.type);
       child.unify(this, -1, position);
       child.unifyDown();

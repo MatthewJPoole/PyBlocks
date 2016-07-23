@@ -382,6 +382,23 @@ Blockly.Connection.prototype.targetBlock = function() {
 };
 
 /**
+ * Returns the input number of the block that this output connection connects to.
+ * @return {number} The input number of the parent or -1 if not an output
+ * connection or not connected to an input.
+ */
+Blockly.Connection.prototype.getInputNumber = function() {
+   if (this.type != Blockly.OUTPUT_VALUE) {
+     console.log("POSY not input");
+     return -1;
+   }
+   if (!this.targetConnection) {
+     console.log("POSY not connection");
+     return -1;
+   }
+   return this.targetConnection.inputNumber_;
+}
+
+/**
  * Move the block(s) belonging to the connection to a point where they don't
  * visually interfere with the specified connection.
  * @param {!Blockly.Connection} staticConnection The connection to move away
