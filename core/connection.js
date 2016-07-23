@@ -343,6 +343,7 @@ Blockly.Connection.prototype.disconnect = function() {
     parentBlock.reType();
     console.log("DISC " + childBlock.type);
     childBlock.reType();
+    childBlock.checkParentheses();
   }
 
   var shadow = parentConnection.getShadowDom();

@@ -117,9 +117,14 @@ Blockly.Blocks['python_list_const3'] = {
 
 Blockly.Blocks['python_list_concat'] = {
   init: function() {
+    this.appendDummyInput()
+        .appendField("", "LPAR");
     this.appendValueInput("LHS");
     this.appendValueInput("RHS")
         .appendField(" + ");
+    this.appendDummyInput()
+        .appendField("", "RPAR");
+    this.setOperator(11);
     this.setInputsInline(true);
     this.setTypeVecs([["*matching", "*matching", "*matching"]]);
     this.setOutput(true);
@@ -130,9 +135,14 @@ Blockly.Blocks['python_list_concat'] = {
 
 Blockly.Blocks['python_list_repeat'] = {
   init: function() {
+    this.appendDummyInput()
+        .appendField("", "LPAR");
     this.appendValueInput("LHS");
     this.appendValueInput("RHS")
         .appendField(" * ");
+    this.appendDummyInput()
+        .appendField("", "RPAR");
+    this.setOperator(12);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["*matching", "int", "*matching"],
@@ -219,9 +229,14 @@ Blockly.Blocks['python_list_len'] = {
 
 Blockly.Blocks['python_list_in'] = {
   init: function() {
+    this.appendDummyInput()
+        .appendField("", "LPAR");
     this.appendValueInput("LHS");
     this.appendValueInput("RHS")
         .appendField(" in ");
+    this.appendDummyInput()
+        .appendField("", "RPAR");
+    this.setOperator(6);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["matching", "*matching", "bool"]

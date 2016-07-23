@@ -536,6 +536,7 @@ Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
           }
       }
       else { // this is an expression
+        this_.checkParentheses();
         this_.reType();
       }
 
@@ -585,6 +586,27 @@ Blockly.Block.prototype.reType = function() {
   console.log("UCOL 3: ", topLevel.typeVecs);
   topLevel.updateColourDown();
 };
+
+Blockly.Block.prototype.checkParentheses = function() {
+  var operator = this.operator;
+  if (operator) {
+    var parent = this.getParent();
+    if (parent) {
+      var parentOp = parent.operator;
+      if (parentOp && parentOp.precedence > operator.precedence) {
+        // add parentheses
+        this.setFieldValue("(", "LPAR");
+        this.setFieldValue(")", "RPAR");
+      }
+    }
+    else {
+      // remove parentheses which may be present
+      this.setFieldValue("", "LPAR");
+      this.setFieldValue("", "RPAR");
+    }
+  }
+};
+
 
 /**
  * Load the block's help page in a new window.

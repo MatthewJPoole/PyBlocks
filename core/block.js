@@ -114,6 +114,9 @@ Blockly.Block.prototype.fill = function(workspace, prototypeName) {
   this.fullTypeVecs = [];
   /** type {!Array<!Array<string>} */
   this.typeVecs = [];
+
+  this.operator = null;
+
   /** @type {boolean} */
   this.rendered = false;
   /** @type {boolean} */
@@ -820,6 +823,14 @@ Blockly.Block.prototype.setTypeVecs = function(typeVecs) {
   this.holes = new Array(numParams);
   this.restoreFullTypes();
 };
+
+Blockly.Block.prototype.setOperator = function(precedence, right) {
+  this.operator = {};
+  this.operator.precedence = precedence;
+  this.operator.right = right;
+  console.log("OPER ", this.operator);
+}
+
 
 /**
  * Restores the block's type-vecs to, as for a new singleton block.

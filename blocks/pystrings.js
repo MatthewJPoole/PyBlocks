@@ -46,9 +46,14 @@ Blockly.Blocks['python_string_const'] = {
 
 Blockly.Blocks['python_string_concat'] = {
   init: function() {
+    this.appendDummyInput()
+        .appendField("", "LPAR");
     this.appendValueInput("LHS");
     this.appendValueInput("RHS")
         .appendField(" + ");
+    this.appendDummyInput()
+        .appendField("", "RPAR");
+    this.setOperator(11);
     this.setInputsInline(true);
     this.setTypeVecs([["str", "str", "str"]]);
     this.setOutput(true);
@@ -59,9 +64,14 @@ Blockly.Blocks['python_string_concat'] = {
 
 Blockly.Blocks['python_string_repeat'] = {
   init: function() {
+    this.appendDummyInput()
+        .appendField("", "LPAR");
     this.appendValueInput("LHS");
     this.appendValueInput("RHS")
         .appendField(" * ");
+    this.appendDummyInput()
+        .appendField("", "RPAR");
+    this.setOperator(12);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["str", "int", "str"],
@@ -165,9 +175,14 @@ Blockly.Blocks['python_string_len'] = {
 
 Blockly.Blocks['python_string_in'] = {
   init: function() {
+    this.appendDummyInput()
+        .appendField("", "LPAR");
     this.appendValueInput("LHS");
     this.appendValueInput("RHS")
         .appendField(" in ");
+    this.appendDummyInput()
+        .appendField("", "RPAR");
+    this.setOperator(6);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["str", "str", "bool"]
