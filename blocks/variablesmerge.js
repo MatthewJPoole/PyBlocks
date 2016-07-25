@@ -40,15 +40,17 @@ Blockly.Blocks['variables_get'] = {
    * @this Blockly.Block
    */
   init: function() {
+    console.log("VARS within var_get init ", this.type, this.getFieldValue("VAR"));
     this.setHelpUrl(Blockly.Msg.VARIABLES_GET_HELPURL);
     this.setColour(Blockly.Blocks.variables.HUE);
     this.appendDummyInput()
         .appendField(new Blockly.FieldVariable(
-        Blockly.Msg.VARIABLES_DEFAULT_NAME), 'VAR');
+        "initname"), 'VAR');
     this.setOutput(true);
-    this.setTypeVecs([["float"]]);
+    this.setTypeVecs([["none"]]);
     this.setTooltip(Blockly.Msg.VARIABLES_GET_TOOLTIP);
     this.contextMenuMsg_ = Blockly.Msg.VARIABLES_GET_CREATE_SET;
+    console.log("VARS at end init", this.type, this.getFieldValue("VAR"));
   },
   /**
    * Return all variables referenced by this block.

@@ -103,6 +103,12 @@ Blockly.Xml.blockToDom_ = function(block) {
     element.appendChild(dataElement);
   }
 
+  // MJP HACK
+  if (block.type == "variables_get") {
+    var vartype = goog.dom.createDom('vartype', null, block.typeVecs[0][0]);
+    element.appendChild(vartype);
+  }
+
   for (var i = 0, input; input = block.inputList[i]; i++) {
     var container;
     var empty = true;
@@ -301,8 +307,12 @@ Blockly.Xml.domToWorkspace = function(workspace, xml) {
  */
 Blockly.Xml.domToBlock = function(workspace, xmlBlock, opt_reuseBlock) {
   // Create top-level block.
+
   var topBlock = Blockly.Xml.domToBlockHeadless_(workspace, xmlBlock,
                                                  opt_reuseBlock);
+
+  console.log("VARS in domToBlock3", topBlock.getFieldValue("VAR"))
+
   if (workspace.rendered) {
     // Hide connections to speed up assembly.
     topBlock.setConnectionsHidden(true);
@@ -438,8 +448,28 @@ Blockly.Xml.domToBlockHeadless_ =
                        prototypeName);
           break;
         }
+        console.log("VARS in domToBlock1", block.getFieldValue("VAR"))
         field.setValue(xmlChild.textContent);
+        console.log("VARS in domToBlock2", block.getFieldValue("VAR"))
         break;
+
+      //MJP HACK
+      case 'vartype':
+        console.log("VARS type in domToBlock1", block.typeVecs[0][0]);
+        if (block.type == 'variables_get') {
+          block.setTypeVecs([[xmlChild.textContent]]);
+        }
+        else if (block.type == 'variables_set') {
+          block.setTypeVecs([[xmlChild.textContent, xmlChild.textContent,
+              'none']]);
+        }
+        else {
+          console.warn("Ignoring Python type in non-variable block");
+        }
+        console.log("VARS type in domToBlock2", block.typeVecs[0][0]);
+        break;
+     //
+
       case 'value':
       case 'statement':
         input = block.getInput(name);
@@ -482,6 +512,11 @@ Blockly.Xml.domToBlockHeadless_ =
           block.nextConnection.connect(blockChild.previousConnection);
         }
         break;
+      // MJP
+      case 'pytype2':
+        console.log("VARSS3.5 found pytype2")
+        break;
+      // MJP end
       default:
         // Unknown tag; ignore.  Same principle as HTML parsers.
         console.warn('Ignoring unknown tag: ' + xmlChild.nodeName);

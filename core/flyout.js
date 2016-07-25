@@ -384,20 +384,20 @@ Blockly.Flyout.prototype.show = function(xmlList) {
   var gaps = [];
   for (var i = 0, xml; xml = xmlList[i]; i++) {
     if (xml.tagName && xml.tagName.toUpperCase() == 'BLOCK') {
-      var pytype = xml.getAttribute('pytype');
-      var pytype2 = xml.getAttribute('pytype2');
-      console.log("VARSS3", pytype);
+      //var pytype = xml.getAttribute('pytype');
+      //var pytype2 = xml.getAttribute('pytype2');
+      console.log("VARS calling domToBlock on ", xml);
       var block = Blockly.Xml.domToBlock(
           /** @type {!Blockly.Workspace} */ (this.workspace_), xml);
-      if (pytype) {
-        block.setTypeVecs([[pytype, pytype, "none"]]);
-        block.fullTypeVecs = [["matching", "matching", "none"]];
-      }
-      if (pytype2) {
-        block.setTypeVecs([[pytype2]]);
-        block.fullTypeVecs = [[pytype2]];
-      }
-      console.log("VARSS4", block);
+      //if (pytype) {
+      //  block.setTypeVecs([[pytype, pytype, "none"]]);
+      //  block.fullTypeVecs = [["matching", "matching", "none"]];
+      //}
+      //if (pytype2) {
+      //  block.setTypeVecs([[pytype2]]);
+      //  block.fullTypeVecs = [[pytype2]];
+      //}
+      console.log("VARSS4", block.type, block.getFieldValue("VAR"));
 
 
       blocks.push(block);

@@ -124,7 +124,7 @@ Blockly.Variables.flyoutCategory = function(workspace) {
       //block.setAttribute("typeVecs", [["int", "int", "none"]]);
 
       // MJP HACK
-
+/*
       var lhs = goog.dom.createDom('value', null);
       lhs.setAttribute('name', 'VAR');
       block.appendChild(lhs);
@@ -136,9 +136,9 @@ Blockly.Variables.flyoutCategory = function(workspace) {
       vfield.setAttribute('name', 'VAR');
       vblock.appendChild(vfield);
       lhs.appendChild(vblock);
-      console.log("VARSS", block);
+      //console.log("VARSS", block);
       //block.reType();
-
+*/
       xmlList.push(block);
     }
     if (Blockly.Blocks['variables_get']) {
@@ -147,13 +147,18 @@ Blockly.Variables.flyoutCategory = function(workspace) {
       // </block>
       var block = goog.dom.createDom('block');
       block.setAttribute('type', 'variables_get');
-      block.setAttribute("pytype", "int");
+      //block.setAttribute("pytype", "int");
       if (Blockly.Blocks['variables_set']) {
         block.setAttribute('gap', 24);
       }
-      var field = goog.dom.createDom('field', null, variableList[i]);
+      //var field = goog.dom.createDom('field', null, variableList[i]);
+      var field = goog.dom.createDom('field', null, "varlistname");
       field.setAttribute('name', 'VAR');
       block.appendChild(field);
+
+      var vartype = goog.dom.createDom('vartype', null, "str");
+      block.appendChild(vartype);
+
       xmlList.push(block);
     }
   }
