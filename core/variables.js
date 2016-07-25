@@ -114,12 +114,31 @@ Blockly.Variables.flyoutCategory = function(workspace) {
       // </block>
       var block = goog.dom.createDom('block');
       block.setAttribute('type', 'variables_set');
+      block.setAttribute("pytype", "int");
       if (Blockly.Blocks['variables_get']) {
         block.setAttribute('gap', 8);
       }
-      var field = goog.dom.createDom('field', null, variableList[i]);
-      field.setAttribute('name', 'VAR');
-      block.appendChild(field);
+      //var field = goog.dom.createDom('field', null, variableList[i]);
+      //field.setAttribute('name', 'VAR');
+      //block.appendChild(field);
+      //block.setAttribute("typeVecs", [["int", "int", "none"]]);
+
+      // MJP HACK
+
+      var lhs = goog.dom.createDom('value', null);
+      lhs.setAttribute('name', 'VAR');
+      block.appendChild(lhs);
+
+      var vblock = goog.dom.createDom('block');
+      vblock.setAttribute('type', 'variables_get');
+      vblock.setAttribute("pytype", "int"); //'[["float", "float", "none"]]');
+      var vfield = goog.dom.createDom('field', null, variableList[i]);
+      vfield.setAttribute('name', 'VAR');
+      vblock.appendChild(vfield);
+      lhs.appendChild(vblock);
+      console.log("VARSS", block);
+      //block.reType();
+
       xmlList.push(block);
     }
     if (Blockly.Blocks['variables_get']) {
@@ -128,6 +147,7 @@ Blockly.Variables.flyoutCategory = function(workspace) {
       // </block>
       var block = goog.dom.createDom('block');
       block.setAttribute('type', 'variables_get');
+      block.setAttribute("pytype", "int");
       if (Blockly.Blocks['variables_set']) {
         block.setAttribute('gap', 24);
       }

@@ -99,9 +99,10 @@ Blockly.Blocks['variables_set'] = {
       "message0": "%1 = %2",
       "args0": [
         {
-          "type": "field_variable",
+          //"type": "field_variable",
+          "type": "input_value",
           "name": "VAR",
-          "variable": Blockly.Msg.VARIABLES_DEFAULT_NAME
+          "variable": Blockly.Msg.VARIABLES_DEFAULT_NAME,
         },
         {
           "type": "input_value",
@@ -109,7 +110,8 @@ Blockly.Blocks['variables_set'] = {
         }
       ],
   //    "movable" : false,
-      "typeVecs": [["float", "none"]],
+      //"typeVecs": [["float", "float", "none"]],
+    //  "fullTypeVecs": [["matching", "matching", "none"]],
       "inputsInline": true,
       "previousStatement": null,
       "nextStatement": null,
