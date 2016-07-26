@@ -112,7 +112,7 @@ Blockly.Blocks['variables_set'] = {
         }
       ],
   //    "movable" : false,
-      //"typeVecs": [["float", "float", "none"]],
+    //  "typeVecs": [["none", "none", "none"]],
     //  "fullTypeVecs": [["matching", "matching", "none"]],
       "inputsInline": true,
       "previousStatement": null,

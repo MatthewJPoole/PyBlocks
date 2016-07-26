@@ -370,8 +370,13 @@ Blockly.Flyout.prototype.show = function(xmlList) {
   if (xmlList == Blockly.Variables.NAME_TYPE) {
     // Special category for variables.
     xmlList =
-        Blockly.Variables.flyoutCategory(this.workspace_.targetWorkspace);
-  } else if (xmlList == Blockly.Procedures.NAME_TYPE) {
+        Blockly.Variables.existingFlyoutCategory(this.workspace_.targetWorkspace);
+  }
+  else if (xmlList == Blockly.Variables.NEW_NAME_TYPE) {
+    xmlList =
+        Blockly.Variables.newFlyoutCategory(this.workspace_.targetWorkspace);
+  }
+  else if (xmlList == Blockly.Procedures.NAME_TYPE) {
     // Special category for procedures.
     xmlList =
         Blockly.Procedures.flyoutCategory(this.workspace_.targetWorkspace);

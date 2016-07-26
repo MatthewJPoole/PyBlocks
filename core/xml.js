@@ -104,9 +104,9 @@ Blockly.Xml.blockToDom_ = function(block) {
   }
 
   // MJP HACK
-  if (block.type == "variables_get") {
-    var vartype = goog.dom.createDom('vartype', null, block.typeVecs[0][0]);
-    element.appendChild(vartype);
+  if (block.type == "variables_get" || block.type == "variables_set") {
+    var pyType = goog.dom.createDom('pytype', null, block.typeVecs[0][0]);
+    element.appendChild(pyType);
   }
 
   for (var i = 0, input; input = block.inputList[i]; i++) {
@@ -454,14 +454,16 @@ Blockly.Xml.domToBlockHeadless_ =
         break;
 
       //MJP HACK
-      case 'vartype':
-        console.log("VARS type in domToBlock1", block.typeVecs[0][0]);
+      case 'pytype':
+        //console.log("VARS type in domToBlock1", block.typeVecs[0][0]);
         if (block.type == 'variables_get') {
           block.setTypeVecs([[xmlChild.textContent]]);
         }
         else if (block.type == 'variables_set') {
           block.setTypeVecs([[xmlChild.textContent, xmlChild.textContent,
               'none']]);
+          block.fullTypeVecs = [["matching", "matching", "none"]];
+          console.log("NEW BLOCK", block);
         }
         else {
           console.warn("Ignoring Python type in non-variable block");

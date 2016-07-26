@@ -576,6 +576,10 @@ Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
 };
 
 Blockly.Block.prototype.reType = function() {
+  if (!this.workspace) {
+    // don't bother if not on workspace
+    return;
+  }
   var topLevel = this.getTopLevel();
   console.log("RETYPE, top level: ", topLevel.type);
   topLevel.restoreFullTypes();

@@ -34,3 +34,11 @@ Blockly.Python.COLOUR['str'] = '#00CC33';  // green
 Blockly.Python.COLOUR['bool'] = '#FF29FF'; // magenta
 Blockly.Python.COLOUR['range'] = '#0080FF' ; // blue
 Blockly.Python.RAINBOW = ['str', 'int', 'float', 'bool', 'range', 'str'];
+
+
+Blockly.Python.NEW_VARS = [
+    {name: "newIntVariable", type: 'int'},
+    {name: "newFloatVariable", type: 'float'},
+    {name: "newStringVariable", type: 'str'},
+    {name: "newBoolVariable", type: 'bool'}
+  ];
