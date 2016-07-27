@@ -54,11 +54,12 @@ Blockly.Blocks['variables_get'] = {
   },
   /**
    * Return all variables referenced by this block.
-   * @return {!Array.<string>} List of variable names.
+   * @return ....
    * @this Blockly.Block
    */
-  getVars: function() {
-    return [this.getFieldValue('VAR')];
+  getVar: function() {
+    return {name: this.getFieldValue('VAR'),
+            type: this.typeVecs[0][0]};
   },
   /**
    * Notification that a variable is renaming.
@@ -79,6 +80,7 @@ Blockly.Blocks['variables_get'] = {
    * @this Blockly.Block
    */
   customContextMenu: function(options) {
+    console.log("CCM", this.contextMenuMsg_);
     var option = {enabled: true};
     var name = this.getFieldValue('VAR');
     option.text = this.contextMenuMsg_.replace('%1', name);
@@ -128,9 +130,9 @@ Blockly.Blocks['variables_set'] = {
    * @return {!Array.<string>} List of variable names.
    * @this Blockly.Block
    */
-  getVars: function() {
-    return [this.getFieldValue('VAR')];
-  },
+//  getVars: function() {
+//    return [this.getFieldValue('VAR')];
+//  },
   /**
    * Notification that a variable is renaming.
    * If the name matches one of this block's variables, rename it.
@@ -138,11 +140,11 @@ Blockly.Blocks['variables_set'] = {
    * @param {string} newName Renamed variable.
    * @this Blockly.Block
    */
-  renameVar: function(oldName, newName) {
-    if (Blockly.Names.equals(oldName, this.getFieldValue('VAR'))) {
-      this.setFieldValue(newName, 'VAR');
-    }
-  },
+//  renameVar: function(oldName, newName) {
+//    if (Blockly.Names.equals(oldName, this.getFieldValue('VAR'))) {
+//      this.setFieldValue(newName, 'VAR');
+//    }
+//  },
   contextMenuType_: 'variables_get',
   customContextMenu: Blockly.Blocks['variables_get'].customContextMenu
 };

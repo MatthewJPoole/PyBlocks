@@ -57,23 +57,17 @@ Blockly.Variables.allVariables = function(root) {
   var variableHash = Object.create(null);
   // Iterate through every block and add each variable to the hash.
   for (var x = 0; x < blocks.length; x++) {
-    if (blocks[x].getVars) {
-      var blockVariables = blocks[x].getVars();
-      for (var y = 0; y < blockVariables.length; y++) {
-        var varName = blockVariables[y];
-        // Variable name may be null if the block is only half-built.
-        if (varName) {
-          variableHash[varName.toLowerCase()] = varName;
-        }
-      }
+    if (blocks[x].getVar) {
+      var variable = blocks[x].getVar();
+      variableHash[variable.name] = variable.type;
     }
   }
   // Flatten the hash into a list.
   var variableList = [];
   for (var name in variableHash) {
-    variableList.push(variableHash[name]);
+    variableList.push({name:name, type:variableHash[name]});
   }
-  //variableList.push("hahaha"); // HACK
+  console.log("VARLIST1", variableList);
   return variableList;
 };
 
@@ -94,10 +88,15 @@ Blockly.Variables.renameVariable = function(oldName, newName, workspace) {
 };
 
 Blockly.Variables.newFlyoutCategory = function(workspace) {
-   return Blockly.Variables.flyoutCategory(worspace,
+   return Blockly.Variables.flyoutCategory(workspace,
       Blockly.Python.NEW_VARS);
-   }
-}
+};
+
+Blockly.Variables.existingFlyoutCategory = function(workspace) {
+   var variableList = Blockly.Variables.allVariables(workspace);
+   return Blockly.Variables.flyoutCategory(workspace,
+      variableList);
+};
 
 /**
  * Construct the blocks required by the flyout for the variable category.
@@ -116,12 +115,17 @@ Blockly.Variables.flyoutCategory = function(workspace, vars) {
   //var variableNames = ["newFloat", "newInt", "newString", "newBoolean"];
   //var variableTypes = ["float", "int", "str", "bool"];
 
+  console.log("VARLIST2", vars);
   var xmlList = [];
   for (var i = 0; i < vars.length; i++) {
+    console.log("VARLIST making", vars[i]);
+    console.log("VARLIST checking", Blockly.Blocks['variables_set']);
     if (Blockly.Blocks['variables_set']) {
       // <block type="variables_set" gap="8">
       //   <field name="VAR">item</field>
       // </block>
+      console.log("VARLIST creating");
+
       var block = goog.dom.createDom('block');
       block.setAttribute('type', 'variables_set');
       if (Blockly.Blocks['variables_get']) {
@@ -145,6 +149,10 @@ Blockly.Variables.flyoutCategory = function(workspace, vars) {
       //console.log("VARSS", block);
       //block.reType();
       xmlList.push(block);
+      console.log("VARLIST xmllist", xmlList);
+
+
+
     }
     if (Blockly.Blocks['variables_get']) {
       // <block type="variables_get" gap="24">
@@ -166,6 +174,7 @@ Blockly.Variables.flyoutCategory = function(workspace, vars) {
       xmlList.push(block);
     }
   }
+  console.log("VARLIST xmllist", xmlList);
   return xmlList;
 };
 
@@ -188,7 +197,7 @@ Blockly.Variables.generateUniqueName = function(workspace) {
     while (!newName) {
       var inUse = false;
       for (var i = 0; i < variableList.length; i++) {
-        if (variableList[i].toLowerCase() == potName) {
+        if (variableList[i].name == potName) {
           // This potential name is already used.
           inUse = true;
           break;
