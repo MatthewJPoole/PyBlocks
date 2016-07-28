@@ -1825,6 +1825,9 @@ Blockly.BlockSvg.prototype.render = function(opt_bubble) {
   // If there are no icons, cursorX will be 0, otherwise it will be the
   // width that the first label needs to move over by.
 
+  // MJP HACK TO GET COLOURS RIGHT
+  this.reType();
+
   var inputRows = this.renderCompute_(cursorX);
   this.renderDraw_(cursorX, inputRows);
 
@@ -2295,9 +2298,9 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
 
 
           if (!input.connection.targetConnection) {
-
+            console.log("XYZ ", this.typeVecs);
             var params = this.getInputKinds(slotNumber);
-            console.log(params);
+            console.log("XYZ " + params);
 
             var indicatorX = cursorX;
             if (params.basic && params.list) {

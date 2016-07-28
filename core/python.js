@@ -44,6 +44,13 @@ Blockly.Python.NEW_VARS = [
     {name: "newBoolVariable", type: 'bool'}
   ];
 
+Blockly.Python.NEW_LIST_VARS = [
+    {name: "newIntListVar", type: '*int'},
+    {name: "newFloatListVar", type: '*float'},
+    {name: "newStringListVar", type: '*str'},
+    {name: "newBoolListVar", type: '*bool'}
+  ];
+
 Blockly.Python.RESERVED_WORDS = ['False', 'None', 'True', 'and', 'as', 'assert',
     'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except',
     'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda',
@@ -104,15 +111,20 @@ Blockly.Python.variableIn = function(variable, variableList) {
   return false;
 };
 
-Blockly.Python.makeNameUnique =function(name, variableList) {
-  var i = '';
-  while ((Blockly.Python.RESERVED.indexOf(name) > -1) ||
-         (Blockly.Python.variableIn(name, variableList)) ||
-         (Blockly.Python.variableIn(name, Blockly.Python.NEW_VARS))) {
-    console.log("MAKEUN " + name);
-    // Collision with existing name.  Create a unique name.
-    i = i ? i + 1 : 2;
-    name = name + i;
+Blockly.Python.makeNameUnique = function(name, variableList) {
+  // Only need to look at new and reserved words once.
+  var newName = name;
+  if ((Blockly.Python.RESERVED.indexOf(newName) > -1) ||
+      (Blockly.Python.variableIn(newName, variableList)) ||
+      (Blockly.Python.variableIn(newName, Blockly.Python.NEW_VARS))) {
+    var i = 2;
+    newName = name + i;
+    console.log("NEWNAME adding a ", i, newName);
+    while (Blockly.Python.variableIn(newName, variableList)) {
+      i = i + 1;
+      newName = name + i;
+      console.log("NEWNAME adding a", i, newName);
+    }
   }
-  return name;
+  return newName;
 }

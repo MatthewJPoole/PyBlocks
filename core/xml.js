@@ -462,7 +462,8 @@ Blockly.Xml.domToBlockHeadless_ =
         else if (block.type == 'variables_set') {
           block.setTypeVecs([[xmlChild.textContent, xmlChild.textContent,
               'none']]);
-          block.fullTypeVecs = [["matching", "matching", "none"]];
+          block.fullTypeVecs = [["matching", "matching", "none"],
+                                ["*matching", "*matching", "none"]];
           console.log("NEW BLOCK", block);
         }
         else {
@@ -514,11 +515,6 @@ Blockly.Xml.domToBlockHeadless_ =
           block.nextConnection.connect(blockChild.previousConnection);
         }
         break;
-      // MJP
-      case 'pytype2':
-        console.log("VARSS3.5 found pytype2")
-        break;
-      // MJP end
       default:
         // Unknown tag; ignore.  Same principle as HTML parsers.
         console.warn('Ignoring unknown tag: ' + xmlChild.nodeName);

@@ -73,7 +73,7 @@ Blockly.Blocks['variables_get'] = {
       this.setFieldValue(newName, 'VAR');
     }
   },
-  contextMenuType_: 'variables_set',
+  contextMenuType_: 'variables_get',
   /**
    * Add menu option to create getter/setter block for this setter/getter.
    * @param {!Array} options List of menu options to add to.
@@ -92,6 +92,10 @@ Blockly.Blocks['variables_get'] = {
     options.push(option);
   }
 };
+
+
+
+
 
 Blockly.Blocks['variables_set'] = {
   /**
@@ -123,28 +127,26 @@ Blockly.Blocks['variables_set'] = {
       "tooltip": Blockly.Msg.VARIABLES_SET_TOOLTIP,
       "helpUrl": Blockly.Msg.VARIABLES_SET_HELPURL
     });
-    this.contextMenuMsg_ = Blockly.Msg.VARIABLES_SET_CREATE_GET;
+    //this.contextMenuMsg_ = Blockly.Msg.VARIABLES_SET_CREATE_GET;
   },
-  /**
-   * Return all variables referenced by this block.
-   * @return {!Array.<string>} List of variable names.
-   * @this Blockly.Block
-   */
-//  getVars: function() {
-//    return [this.getFieldValue('VAR')];
-//  },
-  /**
-   * Notification that a variable is renaming.
-   * If the name matches one of this block's variables, rename it.
-   * @param {string} oldName Previous name of variable.
-   * @param {string} newName Renamed variable.
-   * @this Blockly.Block
-   */
-//  renameVar: function(oldName, newName) {
-//    if (Blockly.Names.equals(oldName, this.getFieldValue('VAR'))) {
-//      this.setFieldValue(newName, 'VAR');
-//    }
-//  },
-  contextMenuType_: 'variables_get',
-  customContextMenu: Blockly.Blocks['variables_get'].customContextMenu
 };
+
+/* possibly leave till later
+Blockly.Blocks['list_variable_index_get'] = {
+
+  init: function() {
+    this.appendValueInput("ARG1");
+    this.appendValueInput("ARG2")
+        .appendField("[");
+    this.appendDummyInput()
+        .appendField("]");
+    this.setInputsInline(true);
+    this.setTypeVecs([
+      ["*matching", "int", "matching"],
+    ]);
+    this.setOutput(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+    }
+};
+*/

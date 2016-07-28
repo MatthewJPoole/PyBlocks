@@ -367,19 +367,19 @@ Blockly.Flyout.prototype.show = function(xmlList) {
   }
   this.buttons_.length = 0;
 
-  if (xmlList == Blockly.Variables.NAME_TYPE) {
-    // Special category for variables.
-    xmlList =
-        Blockly.Variables.existingFlyoutCategory(this.workspace_.targetWorkspace);
-  }
-  else if (xmlList == Blockly.Variables.NEW_NAME_TYPE) {
-    xmlList =
-        Blockly.Variables.newFlyoutCategory(this.workspace_.targetWorkspace);
-  }
-  else if (xmlList == Blockly.Procedures.NAME_TYPE) {
-    // Special category for procedures.
-    xmlList =
-        Blockly.Procedures.flyoutCategory(this.workspace_.targetWorkspace);
+  switch (xmlList) {
+    case Blockly.Variables.CAT_EXISTING:
+      xmlList = Blockly.Variables.existingFlyoutCategory(this.workspace_.targetWorkspace);
+      break;
+    case Blockly.Variables.CAT_NEW_BASIC:
+      xmlList = Blockly.Variables.newFlyoutCategory(this.workspace_.targetWorkspace);
+      break;
+  //  case Blockly.Variables.CAT_EXISTING_LIST:
+  //    xmlList = Blockly.Variables.existingListFlyoutCategory(this.workspace_.targetWorkspace);
+  //    break;
+    case Blockly.Variables.CAT_NEW_LIST:
+      xmlList = Blockly.Variables.newListFlyoutCategory(this.workspace_.targetWorkspace);
+      break;
   }
 
   var margin = this.CORNER_RADIUS;

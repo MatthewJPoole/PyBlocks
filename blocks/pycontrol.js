@@ -31,7 +31,6 @@ goog.require('Blockly.Blocks');
 Blockly.Blocks['python_if'] = {
   init: function() {
     this.appendValueInput("CONDITION")
-        .setAlign(Blockly.ALIGN_RIGHT)
         .appendField("if ")
         .setCheck(["bool"]);
     this.appendDummyInput()
@@ -66,19 +65,17 @@ Blockly.Blocks['python_while'] = {
 
 Blockly.Blocks['python_for'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("for ");
     this.appendValueInput("LOOPVAR")
-        .setCheck(["str"])
-        .setAlign(Blockly.ALIGN_RIGHT)
-        .appendField(new Blockly.FieldVariable("item"), "SEQUENCE")
+        .appendField("for ")
+    this.appendValueInput("SEQUENCE")
         .appendField(" in ")
-        .setCheck(["str"]);
     this.appendDummyInput()
         .appendField(":");
     this.appendStatementInput("BODY");
     this.setInputsInline(true);
-    this.setTypeVecs([["*any", "none"], ["range", "none"], ["str", "none"]]);
+    this.setTypeVecs([["matching", "*matching", "none"],
+                      ["int", "range", "none"],
+                      ["str", "str", "none"]]);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');

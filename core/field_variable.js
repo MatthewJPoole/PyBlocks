@@ -172,18 +172,23 @@ Blockly.FieldVariable.dropdownChange = function(text) {
   var newVar = promptName(Blockly.Msg.RENAME_VARIABLE_TITLE.replace('%1', oldVar),
                       oldVar);
   if (!newVar || newVar == oldVar) {
-    // no change to variable name
+    // No change to variable name.
     return null;
   }
   // Strip leading and trailing whitespace.
   newVar = newVar.replace(/^ +| +$/g, '');
-  // replace symbols with underscores
-  newVar = newVar.replace(/\W+/g, '_');
-  // add 'my' if begins with a digit
-  if ('0123456789'.indexOf(newVar[0]) != -1) {
-    newVar = 'my' + newVar;
+  // If now empty ignore change.
+  if (!newVar) {
+    return null;
   }
-  var variables = Blockly.Variables.allVariables(workspace);
+  // Replace sequences of symbols with '_'.
+  newVar = newVar.replace(/\W+/g, '_');
+  // Prepend with '_' if begins with a digit.
+  if ('0123456789'.indexOf(newVar[0]) != -1) {
+    newVar = '_' + newVar;
+  }
+
+  var variables = Blockly.Variables.allVariables(workspace, true, true);
   newVar = Blockly.Python.makeNameUnique(newVar, variables);
   Blockly.Variables.renameVariable(oldVar, newVar, workspace);
   return newVar;

@@ -45,7 +45,7 @@ Blockly.Blocks['python_list_empty'] = {
 
 Blockly.Blocks['python_list_index'] = {
   init: function() {
-    this.appendValueInput("ARG2");
+    this.appendValueInput("ARG1");
     this.appendValueInput("ARG2")
         .appendField("[");
     this.appendDummyInput()

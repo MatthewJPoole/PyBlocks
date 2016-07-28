@@ -35,15 +35,21 @@ goog.require('goog.string');
 /**
  * Category to separate variable names from procedures and generated functions.
  */
-Blockly.Variables.NAME_TYPE = 'VARIABLE';
-Blockly.Variables.NEW_NAME_TYPE = 'NEW_VARIABLE';
+Blockly.Variables.CAT_EXISTING = 'VARIABLE';
+Blockly.Variables.CAT_EXISTING_LIST =  'LIST_VAR'; // unused at present
+Blockly.Variables.CAT_NEW_BASIC = 'NEW_VARIABLE';
+Blockly.Variables.CAT_NEW_LIST= 'NEW_LIST_VAR';
+
 
 /**
- * Find all user-created variables.
+ * Find user-created variables.
  * @param {!Blockly.Block|!Blockly.Workspace} root Root block or workspace.
+ * @param {boolean} basic Find basic variables.
+ * @param {boolean} basic Find list variables.
  * @return {!Array.<string>} Array of variable names.
  */
-Blockly.Variables.allVariables = function(root) {
+Blockly.Variables.allVariables = function(root, basic, list) {
+  console.log("VARLISTXXX start", variable);
   var blocks;
   if (root.getDescendants) {
     // Root is Block.
@@ -59,15 +65,24 @@ Blockly.Variables.allVariables = function(root) {
   for (var x = 0; x < blocks.length; x++) {
     if (blocks[x].getVar) {
       var variable = blocks[x].getVar();
-      variableHash[variable.name] = variable.type;
+      console.log("VARLISTXXX found", variable);
+      if (variable.type[0] == '*') {
+        if (list) {
+          variableHash[variable.name] = variable.type;
+        }
+      }
+      else if (basic) {
+        variableHash[variable.name] = variable.type;
+      }
     }
   }
+  console.log("VARLISTXXX hash", variableHash);
   // Flatten the hash into a list.
   var variableList = [];
   for (var name in variableHash) {
     variableList.push({name:name, type:variableHash[name]});
   }
-  console.log("VARLIST1", variableList);
+  console.log("VARLISTXXX", variableList);
   return variableList;
 };
 
@@ -92,89 +107,85 @@ Blockly.Variables.newFlyoutCategory = function(workspace) {
       Blockly.Python.NEW_VARS);
 };
 
+Blockly.Variables.newListFlyoutCategory = function(workspace) {
+   return Blockly.Variables.flyoutCategory(workspace,
+      Blockly.Python.NEW_LIST_VARS);
+};
+
 Blockly.Variables.existingFlyoutCategory = function(workspace) {
-   var variableList = Blockly.Variables.allVariables(workspace);
+   console.log("calling VARLISTXXX");
+   var variableList = Blockly.Variables.allVariables(workspace, true, true);
+   console.log("called VARLISTXXX");
    return Blockly.Variables.flyoutCategory(workspace,
       variableList);
+};
+
+Blockly.Variables.existingListFlyoutCategory = function(workspace) {
+   var variableList = Blockly.Variables.allVariables(workspace, false, true);
+   return Blockly.Variables.flyoutCategory(workspace,
+      variableList, true);
 };
 
 /**
  * Construct the blocks required by the flyout for the variable category.
  * @param {!Blockly.Workspace} workspace The workspace contianing variables.
+ * @param {boolean} lispOps Whether to display list indexing operations.
  * @return {!Array.<!Element>} Array of XML block elements.
  */
-Blockly.Variables.flyoutCategory = function(workspace, vars) {
-  //var variableList = Blockly.Variables.allVariables(workspace);
-  //variableList.sort(goog.string.caseInsensitiveCompare);
-  // In addition to the user's variables, we also want to display the default
-  // variable name at the top.  We also don't want this duplicated if the
-  // user has created a variable of the same name.
-  //goog.array.remove(variableList, Blockly.Msg.VARIABLES_DEFAULT_NAME);
-  //variableList.unshift(Blockly.Msg.VARIABLES_DEFAULT_NAME);
+Blockly.Variables.flyoutCategory = function(workspace, vars, listOps) {
+  var newVariableBlock = function(variable) {
+    var block = goog.dom.createDom('block');
+    block.setAttribute('type', 'variables_get');
+    var field = goog.dom.createDom('field', null, variable.name);
+    field.setAttribute('name', 'VAR');
+    block.appendChild(field);
+    var pyType = goog.dom.createDom('pytype', null, variable.type);
+    block.appendChild(pyType);
+    return block;
+  };
 
-  //var variableNames = ["newFloat", "newInt", "newString", "newBoolean"];
-  //var variableTypes = ["float", "int", "str", "bool"];
-
-  console.log("VARLIST2", vars);
   var xmlList = [];
   for (var i = 0; i < vars.length; i++) {
-    console.log("VARLIST making", vars[i]);
-    console.log("VARLIST checking", Blockly.Blocks['variables_set']);
-    if (Blockly.Blocks['variables_set']) {
-      // <block type="variables_set" gap="8">
-      //   <field name="VAR">item</field>
-      // </block>
-      console.log("VARLIST creating");
+    // Create assignment block with variable on lhs.
+    var block = goog.dom.createDom('block');
+    block.setAttribute('type', 'variables_set');
+    var value = goog.dom.createDom('value', null);
+    value.setAttribute('name', 'VAR');
+    block.appendChild(value);
+    var pyType = goog.dom.createDom('pytype', null, vars[i].type);
+    block.appendChild(pyType);
+    var variable = newVariableBlock(vars[i]);
+    value.appendChild(variable);
+    block.setAttribute('gap', 8);
+    xmlList.push(block);
 
-      var block = goog.dom.createDom('block');
-      block.setAttribute('type', 'variables_set');
-      if (Blockly.Blocks['variables_get']) {
-        block.setAttribute('gap', 8);
-      }
+    // Add list item modification for existing list variable
+  //  if (listOps) {
+  //    block = goog.dom.createDom('block');
+  //    block.setAttribute('type', 'list_variable_index_get');
+  //  }
 
+
+    // Create variable value block.
+    block = newVariableBlock(vars[i]);
+    xmlList.push(block);
+
+    /* Add list indexing for existing list variable
+    if (listOps) {
+      block.setAttribute('gap', 8);
+      // Create list indexing block.
+      block = goog.dom.createDom('block');
+      block.setAttribute('type', 'list_variable_index_get');
       var lhsValue = goog.dom.createDom('value', null);
-      lhsValue.setAttribute('name', 'VAR');
+      lhsValue.setAttribute('name', 'ARG1');
       block.appendChild(lhsValue);
-
-      var lhsBlock = goog.dom.createDom('block');
-      lhsBlock.setAttribute('type', 'variables_get');
-      var lhsField = goog.dom.createDom('field', null, vars[i].name);
-      lhsField.setAttribute('name', 'VAR');
-      lhsBlock.appendChild(lhsField);
-      var pyType1 = goog.dom.createDom('pytype', null, vars[i].type);
-      lhsBlock.appendChild(pyType1);
-      var pyType2 = goog.dom.createDom('pytype', null, vars[i].type);
-      block.appendChild(pyType2);
-      lhsValue.appendChild(lhsBlock);
-      //console.log("VARSS", block);
-      //block.reType();
-      xmlList.push(block);
-      console.log("VARLIST xmllist", xmlList);
-
-
-
-    }
-    if (Blockly.Blocks['variables_get']) {
-      // <block type="variables_get" gap="24">
-      //   <field name="VAR">item</field>
-      // </block>
-      var block = goog.dom.createDom('block');
-      block.setAttribute('type', 'variables_get');
-      if (Blockly.Blocks['variables_set']) {
-        block.setAttribute('gap', 24);
-      }
-      //var field = goog.dom.createDom('field', null, variableList[i]);
-      var field = goog.dom.createDom('field', null, vars[i].name);
-      field.setAttribute('name', 'VAR');
-      block.appendChild(field);
-
-      var pyType = goog.dom.createDom('pytype', null, vars[i].type);
+      pyType = goog.dom.createDom('pytype', null, vars[i].type);
       block.appendChild(pyType);
-
+      var variable = newVariableBlock(vars[i]);
+      lhsValue.appendChild(variable);
       xmlList.push(block);
-    }
+    } */
   }
-  console.log("VARLIST xmllist", xmlList);
   return xmlList;
 };
 
@@ -187,7 +198,7 @@ Blockly.Variables.flyoutCategory = function(workspace, vars) {
 * @return {string} New variable name.
 */
 Blockly.Variables.generateUniqueName = function(workspace) {
-  var variableList = Blockly.Variables.allVariables(workspace);
+  var variableList = Blockly.Variables.allVariables(workspace, true, true);
   var newName = '';
   if (variableList.length) {
     var nameSuffix = 1;
