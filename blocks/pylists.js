@@ -313,6 +313,24 @@ Blockly.Blocks['python_append'] = {
   }
 };
 
+Blockly.Blocks['python_list_item_modify'] = {
+  init: function() {
+    this.appendValueInput("ARG1");
+    this.appendValueInput("ARG2")
+        .appendField("[");
+    this.appendValueInput("ARG3")
+        .appendField("] = ");
+    this.setInputsInline(true);
+    this.setTypeVecs([
+      ["*matching", "int", "matching", "none"],
+    ]);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
 Blockly.Blocks['python_extend'] = {
   init: function() {
     this.appendValueInput("ARG1");
