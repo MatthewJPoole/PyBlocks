@@ -135,6 +135,12 @@ Blockly.Xml.blockToDom_ = function(block) {
       element.appendChild(container);
     }
   }
+
+  // MJP HACK - doesn't work
+  if (block.lhsVarOnly) {
+    element.setAttribute('lhsVarOnly', true);
+  }
+
   if (block.inputsInlineDefault != block.inputsInline) {
     element.setAttribute('inline', block.inputsInline);
   }
@@ -464,6 +470,7 @@ Blockly.Xml.domToBlockHeadless_ =
               'none']]);
           block.fullTypeVecs = [["matching", "matching", "none"],
                                 ["*matching", "*matching", "none"]];
+          block.setLhsVarOnly(true);
           console.log("NEW BLOCK", block);
         }
         else {
@@ -519,6 +526,12 @@ Blockly.Xml.domToBlockHeadless_ =
         // Unknown tag; ignore.  Same principle as HTML parsers.
         console.warn('Ignoring unknown tag: ' + xmlChild.nodeName);
     }
+  }
+
+  // MJP HACK - doesn't work
+  var lhsVarOnly = xmlBlock.getAttribute('lhsVarOnly');
+  if (lhsVarOnly) {
+    block.setLhsVarOnly(lhsVarOnly == 'true');
   }
 
   var inline = xmlBlock.getAttribute('inline');

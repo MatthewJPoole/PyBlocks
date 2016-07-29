@@ -115,7 +115,11 @@ Blockly.Block.prototype.fill = function(workspace, prototypeName) {
   /** type {!Array<!Array<string>} */
   this.typeVecs = [];
 
+  this.lhsVarOnly = false;
+
   this.operator = null;
+
+
 
   /** @type {boolean} */
   this.rendered = false;
@@ -824,6 +828,10 @@ Blockly.Block.prototype.setTypeVecs = function(typeVecs) {
   this.restoreFullTypes();
 };
 
+Blockly.Block.prototype.setLhsVarOnly = function(lhsVarOnly) {
+  this.lhsVarOnly = lhsVarOnly;
+};
+
 Blockly.Block.prototype.setOperator = function(precedence, right) {
   this.operator = {};
   this.operator.precedence = precedence;
@@ -1447,7 +1455,7 @@ Blockly.Block.prototype.outputsAList = function() {
  * @param {!Array<string} holeTypes types indicated in hole.
  * @return {bool} true if the drop is legal, false otherwise.
  */
-Blockly.Block.prototype.legalDrop = function(holeTypes) {
+Blockly.Block.prototype.legalDrop = function(holeTypes, requiresVariable) {
   var includesListType = function(types) {
     for (var i=0; i<types.length; i++) {
       if (types[i][0] == "*") {
@@ -1476,6 +1484,11 @@ Blockly.Block.prototype.legalDrop = function(holeTypes) {
     return (types.indexOf("*any") != -1 ||
            types.indexOf("*matching") != -1);
   };
+
+  if (requiresVariable && this.type != 'variables_get') {
+    return false;
+  }
+  
   if (includesGreyBasic(holeTypes) && !this.outputsAList()) {
     return true;
   }

@@ -2151,6 +2151,12 @@ Blockly.BlockSvg.prototype.renderDraw_ = function(iconWidth, inputRows) {
          this.svgIndicatorGroup.appendChild(stripe);
       }
     }
+    if (indicatorPair.varInd) {
+      for (var j=0, ind; ind=indicatorPair.varInd[j]; j++) {
+        console.log("List indicator stripe" + j);
+         this.svgIndicatorGroup.appendChild(ind);
+      }
+    }
   }
 
   if (this.outputConnection && this.outputsAList()) {
@@ -2224,6 +2230,16 @@ Blockly.BlockSvg.prototype.renderDrawTop_ =
  */
 Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
     indicatorSteps, connectionsXY, inputRows, iconWidth) {
+
+  var addVarIndicator = function(x, y) {
+    var text = Blockly.createSvgElement('text', {});
+    text.setAttribute('class', 'blocklyIndicatorText');
+    text.setAttribute('x', x + Blockly.BlockSvg.INDICATOR_WIDTH / 2);
+    text.setAttribute('y', y + Blockly.BlockSvg.INDICATOR_HEIGHT - 3);
+    text.appendChild(document.createTextNode("var"));
+    return text;
+  };
+
   var cursorX;
   var cursorY = 0;
 
@@ -2298,9 +2314,9 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
 
 
           if (!input.connection.targetConnection) {
-            console.log("XYZ ", this.typeVecs);
+            console.log("XYZVAR ", this.type, this.typeVecs);
             var params = this.getInputKinds(slotNumber);
-            console.log("XYZ " + params);
+            console.log("XYZVAR ", params);
 
             var indicatorX = cursorX;
             if (params.basic && params.list) {
@@ -2320,7 +2336,8 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
 
             var indicatorPair = {
               'basic': null,
-              'list': null
+              'list': null,
+              'varInd': []
             };
             // Draw basic type indicator
 
@@ -2338,8 +2355,14 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
             };
 
             if (params.basic) {
+              console.log("XYZVAR basic");
               var indicator = createBasicIndicator(indicatorX, indicatorY);
               indicatorPair.basic = indicator;
+
+              if (slotNumber === 0 && this.lhsVarOnly) {
+                  var varInd = addVarIndicator(indicatorX, indicatorY);
+                  indicatorPair.varInd.push(varInd);
+              }
               indicatorX += Blockly.BlockSvg.INDICATOR_WIDTH +
                   Blockly.BlockSvg.INDICATOR_GAP_X;
             }
@@ -2357,6 +2380,7 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
               for (var i=0; i<3; i++) {
                 var stripe = Blockly.createSvgElement('rect',{},
                   this.svgGroup_);
+                  //this.indicatorGroup);
                 //stripe.setAttribute('x', i * (tempListRectWidth + tempListGapWidth));
                 stripe.setAttribute('x', 0);
                 stripe.setAttribute('y', 0);
@@ -2368,6 +2392,10 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
                 //stripe.setAttribute('transform', 'translate('+
                 //    (0.5 + indicatorX) + ', '  + indicatorY + ')');
                 indicatorPair.list.push(stripe);
+              }
+              if (slotNumber === 0 && this.lhsVarOnly) {
+                  var varInd = addVarIndicator(indicatorX, indicatorY);
+                  indicatorPair.varInd.push(varInd);
               }
               //indicatorPair.list = ;
             }

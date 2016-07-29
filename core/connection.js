@@ -702,12 +702,15 @@ Blockly.Connection.prototype.checkType_ = function(otherConnection) {
   // Need to check kinds of block
   var thisBlock = this.sourceBlock_;
   var inputNumber = otherConnection.inputNumber_;
-  var holeTypes = otherConnection.sourceBlock_.getInputTypes(inputNumber);
+  var otherBlock = otherConnection.sourceBlock_;
+  var requiresVariable = otherBlock.lhsVarOnly && inputNumber == 0;
+  var holeTypes = otherBlock.getInputTypes(inputNumber);
   console.log("CONNX Hole types for input number : ", inputNumber, ": ", holeTypes);
+  console.log("CONNX req var: ", requiresVariable);
 
   if (this.type == Blockly.OUTPUT_VALUE &&
       otherConnection.type == Blockly.INPUT_VALUE) {
-      if (thisBlock.legalDrop(holeTypes)) {
+      if (thisBlock.legalDrop(holeTypes, requiresVariable)) {
         console.log("CONN Legal drop");
         return true;
       }

@@ -306,6 +306,7 @@ Blockly.Blocks['python_append'] = {
     this.setTypeVecs([
       ["*matching", "matching", "none"]
     ]);
+    this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -324,6 +325,7 @@ Blockly.Blocks['python_list_item_modify'] = {
     this.setTypeVecs([
       ["*matching", "int", "matching", "none"],
     ]);
+    this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -342,6 +344,7 @@ Blockly.Blocks['python_extend'] = {
     this.setTypeVecs([
       ["*matching", "*matching", "none"]
     ]);
+    this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -362,6 +365,7 @@ Blockly.Blocks['python_insert'] = {
     this.setTypeVecs([
       ["*matching", "matching", "int", "none"]
     ]);
+    this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -378,6 +382,7 @@ Blockly.Blocks['python_pop'] = {
     this.setTypeVecs([
       ["*matching", "matching"]
     ]);
+    this.setLhsVarOnly(true);
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
@@ -393,6 +398,7 @@ Blockly.Blocks['python_pop_statement'] = {
     this.setTypeVecs([
       ["*any", "none"]
     ]);
+    this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -411,6 +417,7 @@ Blockly.Blocks['python_remove'] = {
     this.setTypeVecs([
       ["*matching", "matching", "none"]
     ]);
+    this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -427,6 +434,7 @@ Blockly.Blocks['python_reverse'] = {
     this.setTypeVecs([
       ["*any", "none"]
     ]);
+    this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -443,6 +451,7 @@ Blockly.Blocks['python_sort'] = {
     this.setTypeVecs([
       ["*any", "none"]
     ]);
+    this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');

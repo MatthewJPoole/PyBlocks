@@ -120,6 +120,7 @@ Blockly.Blocks['variables_set'] = {
   //    "movable" : false,
     //  "typeVecs": [["none", "none", "none"]],
     //  "fullTypeVecs": [["matching", "matching", "none"]],
+      "lhsVarOnly": true,
       "inputsInline": true,
       "previousStatement": null,
       "nextStatement": null,
