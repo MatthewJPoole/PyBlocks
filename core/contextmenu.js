@@ -138,4 +138,4 @@ Blockly.ContextMenu.callbackFactory = function(block, xml) {
     newBlock.moveBy(xy.x, xy.y);
     newBlock.select();
   };
-};
+}; 
