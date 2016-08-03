@@ -138,4 +138,29 @@ Blockly.ContextMenu.callbackFactory = function(block, xml) {
     newBlock.moveBy(xy.x, xy.y);
     newBlock.select();
   };
-}; 
+};
+
+Blockly.ContextMenu.addInputCallback = function(block) {
+  return function() {
+    block.add();
+  };
+};
+
+Blockly.ContextMenu.removeInputCallback = function(block) {
+  return function() {
+    block.remove();
+  };
+};
+
+Blockly.ContextMenu.finalInputCallback = function(block, inputExists) {
+  if (inputExists) {
+    return function() {
+      block.removeFinal();
+    };
+  }
+  else {
+    return function() {
+      block.addFinal();
+    };
+  }
+};
