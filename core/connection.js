@@ -705,13 +705,14 @@ Blockly.Connection.prototype.checkType_ = function(otherConnection) {
   var otherBlock = otherConnection.sourceBlock_;
   var requiresVariable = otherBlock.lhsVarOnly && inputNumber == 0;
   var holeTypes = otherBlock.getInputTypes(inputNumber);
-  console.log("CONNX Hole types for input number : ", inputNumber, ": ", holeTypes);
-  console.log("CONNX req var: ", requiresVariable);
+
 
   if (this.type == Blockly.OUTPUT_VALUE &&
       otherConnection.type == Blockly.INPUT_VALUE) {
+      console.log("CONNX Hole types for input number : ", inputNumber, ": ", holeTypes);
+      console.log("CONNX req var: ", requiresVariable);  
       if (thisBlock.legalDrop(holeTypes, requiresVariable)) {
-        console.log("CONN Legal drop");
+        console.log("CONN Legal drop for input number ", inputNumber);
         return true;
       }
   }

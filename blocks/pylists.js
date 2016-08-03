@@ -62,9 +62,10 @@ Blockly.Blocks['python_list_index'] = {
 
 Blockly.Blocks['python_list_const'] = {
   init: function() {
-    this.appendValueInput("ARG")
-        .appendField("[");
-    this.appendDummyInput()
+    this.appendDummyInput().
+      appendField("[");
+    this.appendValueInput("ARG1");
+    this.appendDummyInput("CLOSE")
         .appendField("]");
     this.setInputsInline(true);
     this.setTypeVecs([
@@ -73,6 +74,48 @@ Blockly.Blocks['python_list_const'] = {
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
+    this.parameterCount = 1;
+  },
+
+  customContextMenu: function(options) {
+    var optionRemove = {enabled: this.parameterCount > 1};
+    optionRemove.text = "Remove value";
+    optionRemove.callback = Blockly.ContextMenu.removeInputCallback(this);
+    var optionAdd = {enabled: true};
+    optionAdd.text = "Add value";
+    optionAdd.callback = Blockly.ContextMenu.addInputCallback(this);
+    options.unshift(optionAdd, optionRemove);
+  },
+
+  mutationToDom: function() {
+    var container = document.createElement('mutation');
+    container.setAttribute('parameter_count', this.parameterCount);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    var parameters = parseInt(xmlElement.getAttribute('parameter_count'));
+    for (var i = 1; i < parameters; i++) {
+      this.add();
+    }
+  },
+
+  add: function() {
+    this.parameterCount++;
+    var inputName = 'ARG' + this.parameterCount;
+    var input = this.appendValueInput(inputName);
+    if (this.parameterCount > 1) {
+      input.appendField(", ");
+    }
+    this.fullTypeVecs[0].splice(-1, 0, "matching");
+    this.moveInputBefore(inputName, "CLOSE");
+  },
+
+  remove: function() {
+    this.removeInput('ARG' + this.parameterCount);
+    this.parameterCount--;
+    this.fullTypeVecs[0].splice(-2, 1);
+    this.render();
   }
 };
 

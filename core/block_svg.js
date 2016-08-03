@@ -536,6 +536,7 @@ Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
           }
       }
       else { // this is an expression
+        console.log("DROPPED INTO INPUT ", this_.outputConnection.targetConnection.inputNumber_);
         this_.checkParentheses();
         this_.reType();
       }
@@ -1524,6 +1525,7 @@ Blockly.BlockSvg.prototype.updateColour = function() {
 
   //for (var i = 0, indicatorPair; indicatorPair = this.indicators[i]; i++) {
   for (var emptySlotNumber in this.indicators) {
+    console.log("SLOTfill", emptySlotNumber);
     var indicatorPair = this.indicators[emptySlotNumber];
     if (indicatorPair.basic) {
       var basicTypes = this.getInputTypesByKind(emptySlotNumber).basic;
@@ -1935,6 +1937,7 @@ Blockly.BlockSvg.prototype.renderCompute_ = function(iconWidth) {
     // The width is currently only needed for inline value inputs.
     if (isInline && input.type == Blockly.INPUT_VALUE) {
       slotNumber++;
+      console.log("SLOT ", slotNumber, " connection ", input.connection.inputNumber_);
       var kinds = this.getInputKinds(slotNumber);
       if (kinds.basic && kinds.list) {
         input.renderWidth = Blockly.BlockSvg.DOUBLE_SLOT_WIDTH;
@@ -2030,12 +2033,11 @@ Blockly.BlockSvg.prototype.renderCompute_ = function(iconWidth) {
         inputRows[0].height += Blockly.BlockSvg.INLINE_PADDING_BOTTOM - shortfall;
     }
 
-    if (inputRows.length == 2) {
-        console.log("while loop with row 1", inputRows[1].height);
-        if (inputRows[1].height > Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
-            inputRows[1].height -= 4; // notch height
+    if (inputRows.length >1) {
+        console.log("control structure final row", inputRows[1].height);
+        if (inputRows[inputRows.length-1].height > Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
+            inputRows[inputRows.length-1].height -= 4; // notch height
         }
-
     }
 
     //console.log("2 statement row thickness",inputRows[0].height );
@@ -2140,6 +2142,7 @@ Blockly.BlockSvg.prototype.renderDraw_ = function(iconWidth, inputRows) {
   }
   //for (var i=0, indicator; indicator=this.indicators[i]; i++) {
   for (var emptySlotNumber in this.indicators) {
+    console.log("SLOT adding slot", emptySlotNumber, "to group");
     var indicatorPair = this.indicators[emptySlotNumber];
     if (indicatorPair.basic) {
       console.log("Basic indicator " + emptySlotNumber);
@@ -2247,6 +2250,7 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
     console.log("statement cursor first", cursorY);
   }
   var connectionX, connectionY;
+  var slotNumber = -1;
   for (var y = 0, row; row = inputRows[y]; y++) {
     cursorX = Blockly.BlockSvg.SEP_SPACE_X;
     if (y == 0) {
@@ -2266,8 +2270,10 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
       steps.push('v', remainder);
       this.width += Blockly.BlockSvg.JAGGED_TEETH_WIDTH;
     } else if (row.type == Blockly.BlockSvg.INLINE) {
+      if (row.height < Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
+          row.height = Blockly.BlockSvg.MIN_STMT_BLOCK_Y;
+      }
       // Inline inputs.
-      var slotNumber = -1;
       for (var x = 0, input; input = row[x]; x++) {
         var fieldX = cursorX;
         var fieldY = cursorY;
@@ -2401,6 +2407,8 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
             }
             //this.indicators.push(indicatorPair);
             this.indicators[slotNumber] = indicatorPair;
+            console.log("SLOT ", slotNumber, " assigned ", indicatorPair);
+            console.log("SLOT ", this.indicators);
           }
 
           // Create inline input connection.
