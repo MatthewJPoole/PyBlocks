@@ -107,8 +107,14 @@ Blockly.Blocks['python_print'] = {
       input.appendField(", ");
     }
     var inputToAdd = this.hasEndParameter ? -2 : -1;
-    this.fullTypeVecs[0].splice(inputToAdd, 0, "any");
-    this.fullTypeVecs[1].splice(inputToAdd, 0, "*any");
+    var length = this.fullTypeVecs.length;
+    for (var i = 0; i < length; i++) {
+      this.fullTypeVecs[i].splice(inputToAdd, 0, "any");
+      var newRow = this.fullTypeVecs[i].slice(0);
+      newRow[inputToAdd] = "*any";
+      this.fullTypeVecs.push(newRow);
+    }
+    console.log("PRINT %o", this.fullTypeVecs);
     if (this.hasEndParameter) {
       this.moveInputBefore(inputName, "END");
     }
