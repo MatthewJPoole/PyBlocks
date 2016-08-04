@@ -153,6 +153,7 @@ Blockly.Blocks['python_for'] = {
     this.setTypeVecs([["matching", "*matching", "none"],
                       ["int", "range", "none"],
                       ["str", "str", "none"]]);
+    this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');

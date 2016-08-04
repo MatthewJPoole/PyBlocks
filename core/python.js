@@ -24,6 +24,8 @@
  */
 'use strict';
 
+console.log = function() {};
+
 goog.require('Blockly.Names');
 
 goog.provide('Blockly.Python');

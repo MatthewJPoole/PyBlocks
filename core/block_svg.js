@@ -2021,26 +2021,28 @@ Blockly.BlockSvg.prototype.renderCompute_ = function(iconWidth) {
 
   }
 
-  // HACK to make row of statements at least minumum thickness
+  // HACK to adjust height of rows in statement blocks
   if (!this.outputConnection) {
-    if (inputRows[0].height < Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
-        inputRows[0].height = Blockly.BlockSvg.MIN_STMT_BLOCK_Y;
-    }
-    else {
-        var shortfall = (inputRows[0].height - Blockly.BlockSvg.MIN_STMT_BLOCK_Y) %
-                          Blockly.BlockSvg.INLINE_PADDING_BOTTOM;
-        console.log("shortfall0 =", shortfall)
-        inputRows[0].height += Blockly.BlockSvg.INLINE_PADDING_BOTTOM - shortfall;
-    }
-
-    if (inputRows.length >1) {
-        console.log("control structure final row", inputRows[1].height);
-        if (inputRows[inputRows.length-1].height > Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
-            inputRows[inputRows.length-1].height -= 4; // notch height
+    for (var i = 0, row; row = inputRows[i]; i++) {
+      if (i % 2 == 0) {
+        // row with inputs
+        if (inputRows[i].height < Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
+          inputRows[i].height = Blockly.BlockSvg.MIN_STMT_BLOCK_Y;
         }
+      }
+      else {
+        // row with nested statements
+        if (inputRows[i].height > Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
+           inputRows[i].height -= 4;
+        }
+      }
     }
-
-    //console.log("2 statement row thickness",inputRows[0].height );
+  }
+  else {
+    //var shortfall = (inputRows[0].height - Blockly.BlockSvg.MIN_STMT_BLOCK_Y) %
+    //                  Blockly.BlockSvg.INLINE_PADDING_BOTTOM;
+    //console.log("shortfall0 =", shortfall)
+    //inputRows[0].height += Blockly.BlockSvg.INLINE_PADDING_BOTTOM - shortfall;
   }
   //else {
     //  console.log("2 expression row thickness",inputRows[0].height );
@@ -2270,9 +2272,9 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
       steps.push('v', remainder);
       this.width += Blockly.BlockSvg.JAGGED_TEETH_WIDTH;
     } else if (row.type == Blockly.BlockSvg.INLINE) {
-      if (row.height < Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
-          row.height = Blockly.BlockSvg.MIN_STMT_BLOCK_Y;
-      }
+    //  if (row.height < Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
+    //     row.height = Blockly.BlockSvg.MIN_STMT_BLOCK_Y;
+    //  }
       // Inline inputs.
       for (var x = 0, input; input = row[x]; x++) {
         var fieldX = cursorX;
@@ -2613,7 +2615,6 @@ Blockly.BlockSvg.prototype.renderDrawLeft_ =
 };
 
 Blockly.Block.prototype.checkParentheses = function() {
-  console.log("PARS start");
   var operator = this.operator;
   if (operator) {
     var parent = this.getParent();
@@ -2624,25 +2625,17 @@ Blockly.Block.prototype.checkParentheses = function() {
       }
       var position = this.outputConnection.getInputNumber();
       if (parentOp.precedence < operator.precedence) {
-        console.log("PARS child has greater precedence");
         return;
       }
       else if (parentOp.precedence == operator.precedence) {
-        console.log("PARS child has equal precedence");
-        console.log("PARS type ", this.type);
-
         if (position == 1 && this.type == 'python_pow_op') {
           return;
         }
-
-        console.log("PARS input number is ", position);
         if (position == 0 && this.type != 'python_pow_op') {
-          console.log("PARS child dropped in left slot");
           return;
         }
       }
       else {
-        console.log("PARS type parent type", this.type, parent.type);
         if (position == 1 && parent.type == 'python_pow_op' &&
             this.type == "python_unary_minus") {
           return;
