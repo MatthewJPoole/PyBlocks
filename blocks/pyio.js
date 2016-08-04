@@ -106,15 +106,17 @@ Blockly.Blocks['python_print'] = {
     else if (this.parameterCount > 1) {
       input.appendField(", ");
     }
-    var inputToAdd = this.hasEndParameter ? -2 : -1;
     var length = this.fullTypeVecs.length;
+    console.log("PRINTIO before", JSON.stringify(this.fullTypeVecs));
     for (var i = 0; i < length; i++) {
-      this.fullTypeVecs[i].splice(inputToAdd, 0, "any");
+      this.fullTypeVecs[i].splice(this.parameterCount-1, 0, "any");
       var newRow = this.fullTypeVecs[i].slice(0);
-      newRow[inputToAdd] = "*any";
+      console.log("PRINTIO newrow before", JSON.stringify(newRow));
+      newRow[this.parameterCount-1] = "*any";
+      console.log("PRINTIO newrow after", JSON.stringify(newRow));
       this.fullTypeVecs.push(newRow);
     }
-    console.log("PRINT %o", this.fullTypeVecs);
+    console.log("PRINTIO after", JSON.stringify(this.fullTypeVecs), "\n");
     if (this.hasEndParameter) {
       this.moveInputBefore(inputName, "END");
     }
@@ -129,13 +131,18 @@ Blockly.Blocks['python_print'] = {
     if (this.parameterCount == 0 && this.hasEndParameter) {
       this.setFieldValue("end=", "END_KEYWORD");
     }
-    var inputToRemove = this.hasEndParameter ? -3 : -2;
-    this.fullTypeVecs[0].splice(inputToRemove, 1);
-    this.fullTypeVecs[1].splice(inputToRemove, 1);
+    console.log("PRINTIO before", JSON.stringify(this.fullTypeVecs));
+    var half = Math.pow(2, this.parameterCount);
+    this.fullTypeVecs.splice(half, half);
+    for (var i = 0; i < half; i++) {
+      this.fullTypeVecs[i].splice(this.parameterCount, 1);
+    }
+    console.log("PRINTIO after", JSON.stringify(this.fullTypeVecs), "\n");
     this.render();
   },
 
   addFinal: function() {
+    console.log("PRINTIO before", JSON.stringify(this.fullTypeVecs));
     this.hasEndParameter = true;
     var input = this.appendValueInput("END");
     if (this.parameterCount > 0) {
@@ -144,15 +151,83 @@ Blockly.Blocks['python_print'] = {
     else {
       input.appendField("end=", "END_KEYWORD");
     }
-    this.fullTypeVecs[0].splice(-1, 0, "str");
-    this.fullTypeVecs[1].splice(-1, 0, "str");
+    for (var i = 0; i < this.fullTypeVecs.length; i++) {
+      this.fullTypeVecs[i].splice(-1, 0, "str");
+    }
     this.moveInputBefore("END", "CLOSE");
+    console.log("PRINTIO after", JSON.stringify(this.fullTypeVecs), "\n");
+
   },
 
   removeFinal: function() {
     this.hasEndParameter = false;
     this.removeInput('END');
+    console.log("PRINTIO before", JSON.stringify(this.fullTypeVecs));
+    for (var i = 0; i < this.fullTypeVecs.length; i++) {
+      this.fullTypeVecs[i].splice(-2, 1);
+    }
+    console.log("PRINTIO after", JSON.stringify(this.fullTypeVecs), "\n");
+
+  }
+};
+
+
+Blockly.Blocks['python_format'] = {
+  init: function() {
+    this.appendValueInput("ARG0");
+    this.appendDummyInput().
+      appendField(".format(");
+    this.appendValueInput("ARG1");
+    this.appendDummyInput("CLOSE")
+        .appendField(")");
+    this.setInputsInline(true);
+    this.setTypeVecs([
+      ["str", "any", "str"]
+    ]);
+    this.setOutput(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+    this.parameterCount = 1;
+  },
+
+  customContextMenu: function(options) {
+    var optionRemove = {enabled: this.parameterCount > 1};
+    optionRemove.text = "Remove parameter";
+    optionRemove.callback = Blockly.ContextMenu.removeInputCallback(this);
+    var optionAdd = {enabled: true};
+    optionAdd.text = "Add parameter";
+    optionAdd.callback = Blockly.ContextMenu.addInputCallback(this);
+    options.unshift(optionAdd, optionRemove);
+  },
+
+  mutationToDom: function() {
+    var container = document.createElement('mutation');
+    container.setAttribute('parameter_count', this.parameterCount);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    var parameters = parseInt(xmlElement.getAttribute('parameter_count'));
+    for (var i = 1; i < parameters; i++) {
+      this.add();
+  }
+},
+
+  add: function() {
+    this.parameterCount++;
+    var inputName = 'ARG' + this.parameterCount;
+    var input = this.appendValueInput(inputName);
+    if (this.parameterCount > 1) {
+      input.appendField(", ");
+    }
+    this.fullTypeVecs[0].splice(-1, 0, "any");
+    this.moveInputBefore(inputName, "CLOSE");
+  },
+
+  remove: function() {
+    this.removeInput('ARG' + this.parameterCount);
+    this.parameterCount--;
     this.fullTypeVecs[0].splice(-2, 1);
-    this.fullTypeVecs[1].splice(-2, 1);
+    this.render();
   }
 };
