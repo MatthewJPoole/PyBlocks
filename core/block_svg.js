@@ -2024,7 +2024,7 @@ Blockly.BlockSvg.prototype.renderCompute_ = function(iconWidth) {
   // HACK to adjust height of rows in statement blocks
   if (!this.outputConnection) {
     for (var i = 0, row; row = inputRows[i]; i++) {
-      if (i % 2 == 0) {
+      if (i % 2 == 0 || this.type == "python_comment") {
         // row with inputs
         if (inputRows[i].height < Blockly.BlockSvg.MIN_STMT_BLOCK_Y) {
           inputRows[i].height = Blockly.BlockSvg.MIN_STMT_BLOCK_Y;

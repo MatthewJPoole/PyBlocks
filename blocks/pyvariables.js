@@ -24,7 +24,7 @@
  */
 'use strict';
 
-goog.provide('Blockly.Blocks.variables');
+goog.provide('Blockly.Blocks.pyvariables');
 
 goog.require('Blockly.Blocks');
 
@@ -32,7 +32,7 @@ goog.require('Blockly.Blocks');
 /**
  * Common HSV hue for all blocks in this category.
  */
-Blockly.Blocks.variables.HUE = 330;
+Blockly.Blocks.pyvariables.HUE = 330;
 
 Blockly.Blocks['variables_get'] = {
   /**
