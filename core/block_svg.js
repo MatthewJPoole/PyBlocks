@@ -630,6 +630,7 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
     }
     menuOptions.push(duplicateOption);
 
+/* MJP remove add comment, collapse and disable options
     if (this.isEditable() && !this.collapsed_ &&
         this.workspace.options.comments) {
       // Option to add/remove a comment.
@@ -647,6 +648,7 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
       }
       menuOptions.push(commentOption);
     }
+
 
     // Option to make block inline.
     if (!this.collapsed_) {
@@ -699,6 +701,7 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
       };
       menuOptions.push(disableOption);
     }
+*/
 
     // Option to delete this block.
     // Count the number of blocks that are nested in this block.

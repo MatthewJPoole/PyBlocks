@@ -42,9 +42,8 @@ Blockly.Blocks['variables_get'] = {
   init: function() {
     console.log("VARS within var_get init ", this.type, this.getFieldValue("VAR"));
     this.setHelpUrl(Blockly.Msg.VARIABLES_GET_HELPURL);
-    this.setColour(Blockly.Blocks.variables.HUE);
     this.appendDummyInput()
-        .appendField(new Blockly.FieldVariable(
+        .appendField(new Blockly.Field(
         "initname"), 'VAR');
     this.setOutput(true);
     this.setTypeVecs([["none"]]);
@@ -80,22 +79,12 @@ Blockly.Blocks['variables_get'] = {
    * @this Blockly.Block
    */
   customContextMenu: function(options) {
-    console.log("CCM", this.contextMenuMsg_);
-    var option = {enabled: true};
-    var name = this.getFieldValue('VAR');
-    option.text = this.contextMenuMsg_.replace('%1', name);
-    var xmlField = goog.dom.createDom('field', null, name);
-    xmlField.setAttribute('name', 'VAR');
-    var xmlBlock = goog.dom.createDom('block', null, xmlField);
-    xmlBlock.setAttribute('type', this.contextMenuType_);
-    option.callback = Blockly.ContextMenu.callbackFactory(this, xmlBlock);
-    options.push(option);
+    var rename = {enabled: true};
+    rename.text = "Rename variable ...";
+    rename.callback = Blockly.Python.renameVariableCallback(this);
+    options.unshift(rename);
   }
 };
-
-
-
-
 
 Blockly.Blocks['variables_set'] = {
   /**
@@ -124,7 +113,6 @@ Blockly.Blocks['variables_set'] = {
       "inputsInline": true,
       "previousStatement": null,
       "nextStatement": null,
-      "colour": Blockly.Blocks.variables.HUE,
       "tooltip": Blockly.Msg.VARIABLES_SET_TOOLTIP,
       "helpUrl": Blockly.Msg.VARIABLES_SET_HELPURL
     });

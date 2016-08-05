@@ -129,4 +129,43 @@ Blockly.Python.makeNameUnique = function(name, variableList) {
     }
   }
   return newName;
-}
+};
+
+Blockly.Python.renameVariableCallback = function(block) {
+  return function() {
+    Blockly.Python.renameVariable(block.getField("VAR"));
+  };
+};
+
+Blockly.Python.renameVariable = function(field) {
+  function promptName(promptText, defaultText) {
+    Blockly.hideChaff();
+    var newVar = window.prompt(promptText, defaultText);
+    return newVar;
+  }
+  var workspace = field.sourceBlock_.workspace;
+  var oldVar = field.getText();
+  var newVar = promptName(Blockly.Msg.RENAME_VARIABLE_TITLE.replace('%1', oldVar),
+                      oldVar);
+  if (!newVar || newVar == oldVar) {
+    // No change to variable name.
+    return null;
+  }
+  // Strip leading and trailing whitespace.
+  newVar = newVar.replace(/^ +| +$/g, '');
+  // If now empty ignore change.
+  if (!newVar) {
+    return null;
+  }
+  // Replace sequences of symbols with '_'.
+  newVar = newVar.replace(/\W+/g, '_');
+  // Prepend with '_' if begins with a digit.
+  if ('0123456789'.indexOf(newVar[0]) != -1) {
+    newVar = '_' + newVar;
+  }
+
+  var variables = Blockly.Variables.allVariables(workspace, true, true);
+  newVar = Blockly.Python.makeNameUnique(newVar, variables);
+  Blockly.Variables.renameVariable(oldVar, newVar, workspace);
+  return newVar;
+};
