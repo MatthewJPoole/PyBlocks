@@ -323,7 +323,9 @@ Blockly.Blocks['python_split'] = {
   init: function() {
     this.appendValueInput("ARG");
     this.appendDummyInput()
-        .appendField(".split()");
+        .appendField(".split(");
+    this.appendDummyInput("CLOSE")
+        .appendField(")");
     this.setInputsInline(true);
     this.setTypeVecs([
       ["str", "*str"]
@@ -331,5 +333,41 @@ Blockly.Blocks['python_split'] = {
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
+    this.hasSepParameter = false;
+  },
+
+  customContextMenu: function(options) {
+    var optionSep = {enabled: true};
+    optionSep.text = this.hasSepParameter ?
+        'Remove separator parameter' : 'Add separator parameter';
+    optionSep.callback =
+        Blockly.ContextMenu.finalInputCallback(this, this.hasSepParameter);
+    options.unshift(optionSep);
+  },
+
+  mutationToDom: function() {
+    var container = document.createElement('mutation');
+    container.setAttribute('has_sep_parameter', this.hasSepParameter);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    if (xmlElement.getAttribute('has_sep_parameter') == "true") {
+      this.addFinal();
+    }
+  },
+
+  addFinal: function() {
+    this.hasSepParameter = true;
+    this.appendValueInput("SEP");
+    this.fullTypeVecs[0].splice(-1, 0, "str");
+    this.moveInputBefore("SEP", "CLOSE");
+  },
+
+  removeFinal: function() {
+    this.hasSepParameter = false;
+    this.removeInput('SEP');
+    this.fullTypeVecs[0].splice(-2, 1);
   }
+
 };

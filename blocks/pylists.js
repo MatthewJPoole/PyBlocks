@@ -43,22 +43,6 @@ Blockly.Blocks['python_list_empty'] = {
 };
 
 
-Blockly.Blocks['python_list_index'] = {
-  init: function() {
-    this.appendValueInput("ARG1");
-    this.appendValueInput("ARG2")
-        .appendField("[");
-    this.appendDummyInput()
-        .appendField("]");
-    this.setInputsInline(true);
-    this.setTypeVecs([
-      ["*matching", "int", "matching"],
-    ]);
-    this.setOutput(true);
-    this.setTooltip('');
-    this.setHelpUrl('http://www.example.com/');
-  }
-};
 
 Blockly.Blocks['python_list_const'] = {
   init: function() {
@@ -119,17 +103,17 @@ Blockly.Blocks['python_list_const'] = {
   }
 };
 
-Blockly.Blocks['python_list_const2'] = {
+Blockly.Blocks['python_list_function'] = {
   init: function() {
-    this.appendValueInput("ARG1")
-        .appendField("[");
-    this.appendValueInput("ARG2")
-        .appendField(", ");
+    this.appendDummyInput().
+      appendField("list(");
+    this.appendValueInput("ARG1");
     this.appendDummyInput()
-        .appendField("]");
+        .appendField(")");
     this.setInputsInline(true);
     this.setTypeVecs([
-      ["matching", "matching", "*matching"],
+      ["str", "*str"],
+      ["range", "*int"]
     ]);
     this.setOutput(true);
     this.setTooltip('');
@@ -137,25 +121,24 @@ Blockly.Blocks['python_list_const2'] = {
   }
 };
 
-Blockly.Blocks['python_list_const3'] = {
+
+Blockly.Blocks['python_list_index'] = {
   init: function() {
-    this.appendValueInput("ARG1")
-        .appendField("[");
+    this.appendValueInput("ARG1");
     this.appendValueInput("ARG2")
-        .appendField(", ");
-    this.appendValueInput("ARG3")
-        .appendField(", ");
+        .appendField("[");
     this.appendDummyInput()
         .appendField("]");
     this.setInputsInline(true);
     this.setTypeVecs([
-      ["matching", "matching", "matching", "*matching"],
+      ["*matching", "int", "matching"],
     ]);
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
   }
 };
+
 
 
 Blockly.Blocks['python_list_concat'] = {

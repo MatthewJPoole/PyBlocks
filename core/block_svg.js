@@ -1500,7 +1500,11 @@ Blockly.BlockSvg.prototype.updateColour = function() {
         fillText = Blockly.Python.COLOUR[listTypes[0]];
       }
       else { // should be list of int/float
-        fillText = 'url(#' + this.workspace.options.floatintPatternLargeId + ')';
+        listTypes.sort();
+        var typeString = listTypes.join('');
+        var fillUrl = this.workspace.options[typeString + 'TypePatternLargeId'];
+        console.log("FILLNUMTEXT1 " + typeString);
+        fillText = 'url(#' + fillUrl  + ')';
       }
       for (var i=0; i<3; i++) {
         this.svgListRects[i].setAttribute('fill', fillText);
@@ -1512,7 +1516,11 @@ Blockly.BlockSvg.prototype.updateColour = function() {
         fillText = 'url(#' + this.workspace.options.anyTypePatternLargeId + ')';
       }
       else if (outputTypes.length == 2) { // should be list of int/float
-        fillText = 'url(#' + this.workspace.options.floatintTypePatternLargeId + ')';
+        outputTypes.sort();
+        var typeString = outputTypes.join('');
+        var fillUrl = this.workspace.options[typeString + 'TypePatternLargeId'];
+        console.log("FILLNUMTEXT1 " + typeString);
+        fillText = 'url(#' + fillUrl  + ')';
       }
       else { // should be just one type
         fillText = Blockly.Python.COLOUR[outputTypes[0]];

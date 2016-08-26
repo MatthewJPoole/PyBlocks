@@ -440,6 +440,7 @@ var createMultiTypePattern = function(types, sizeStr) {
   createMultiTypePattern(["int", "str"], "Small");
   createMultiTypePattern(["float", "int", "str"], "Small");
   createMultiTypePattern(["float", "int"], "Large");
+  createMultiTypePattern(["int", "str"], "Large");
 
   //options.numericalTypeGradientId = numericalTypeGradient.id;
   console.log("CREATED: ", options);
