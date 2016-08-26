@@ -797,6 +797,9 @@ Blockly.Block.prototype.setOutput = function(newBoolean, opt_check) {
     this.render();
     this.bumpNeighbours_();
   }
+
+  this.canHaveTooltipValue = newBoolean;
+
 };
 
 /**

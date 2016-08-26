@@ -1494,13 +1494,13 @@ Blockly.BlockSvg.prototype.updateColour = function() {
       this.svgBlockPath_.setAttribute('fill', "white");
       var listTypes = this.getOutputTypesByKind().list;
       if (listTypes[0] == "any" || listTypes[0] == "matching") {
-        fillText = 'url(#' + this.workspace.options.multiTypePatternLargeId + ')';
+        fillText = 'url(#' + this.workspace.options.anyTypePatternLargeId + ')';
       }
       else if (listTypes.length == 1) {
         fillText = Blockly.Python.COLOUR[listTypes[0]];
       }
       else { // should be list of int/float
-        fillText = 'url(#' + this.workspace.options.numericalTypePatternLargeId + ')';
+        fillText = 'url(#' + this.workspace.options.floatintPatternLargeId + ')';
       }
       for (var i=0; i<3; i++) {
         this.svgListRects[i].setAttribute('fill', fillText);
@@ -1509,10 +1509,10 @@ Blockly.BlockSvg.prototype.updateColour = function() {
     else {
       var outputTypes = this.getOutputTypesByKind().basic;
       if (outputTypes[0] == "any" || outputTypes[0] == "matching") {
-        fillText = 'url(#' + this.workspace.options.multiTypePatternLargeId + ')';
+        fillText = 'url(#' + this.workspace.options.anyTypePatternLargeId + ')';
       }
       else if (outputTypes.length == 2) { // should be list of int/float
-        fillText = 'url(#' + this.workspace.options.numericalTypePatternLargeId + ')';
+        fillText = 'url(#' + this.workspace.options.floatintTypePatternLargeId + ')';
       }
       else { // should be just one type
         fillText = Blockly.Python.COLOUR[outputTypes[0]];
@@ -1534,15 +1534,18 @@ Blockly.BlockSvg.prototype.updateColour = function() {
       var basicTypes = this.getInputTypesByKind(emptySlotNumber).basic;
       console.log("UCOL position ", emptySlotNumber, basicTypes);
       if (basicTypes[0] == "any" || basicTypes[0] == "matching") {
-        fillText = 'url(#' + this.workspace.options.multiTypePatternSmallId + ')';
+        fillText = 'url(#' + this.workspace.options.anyTypePatternSmallId + ')';
       }
       else if (basicTypes.length == 2) {
         basicTypes.sort();
         var typeString = basicTypes.join('');
-        var fillUrl = this.workspace.options[typeString + 'TypePatternId'];
-        console.log("FILLNUM " + typeString);
+        var fillUrl = this.workspace.options[typeString + 'TypePatternSmallId'];
+        console.log("FILLNUMTEXT1 " + typeString);
         fillText = 'url(#' + fillUrl  + ')';
-        console.log("FILLNUM " + fillText);
+        console.log("FILLNUMTEXT2 " + fillText);
+      }
+      else if (basicTypes.length == 3) {
+        fillText = 'url(#' + this.workspace.options.floatintstrTypePatternSmallId + ')';
       }
       else {
         fillText = Blockly.Python.COLOUR[basicTypes[0]];
@@ -1552,10 +1555,13 @@ Blockly.BlockSvg.prototype.updateColour = function() {
     if (indicatorPair.list) {
      var pListTypes = this.getInputTypesByKind(emptySlotNumber).list;
      if (pListTypes[0] == "any" || pListTypes[0] == "matching") {
-       fillText = 'url(#' + this.workspace.options.multiTypePatternSmallId + ')';
+       fillText = 'url(#' + this.workspace.options.anyTypePatternSmallId + ')';
+     }
+     else if (pListTypes.length == 3) {
+       fillText = 'url(#' + this.workspace.options.floatintstrTypePatternSmallId + ')';
      }
      else if (pListTypes.length == 2) {
-       fillText = 'url(#' + this.workspace.options.floatintTypePatternId + ')';
+       fillText = 'url(#' + this.workspace.options.floatintTypePatternSmallId + ')';
      }
      else {
        // should be just one type
