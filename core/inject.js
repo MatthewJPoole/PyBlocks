@@ -418,6 +418,7 @@ Blockly.createDom_ = function(container, options) {
   createMultiTypeGradient(["float", "int", "str"]);
 
 
+/*
 var createMultiTypePattern = function(types, sizeStr) {
   var name = types.join('') + "TypePattern" + sizeStr;
   var dimension = types.length * (sizeStr == "Small" ? 7 : 15);
@@ -431,6 +432,62 @@ var createMultiTypePattern = function(types, sizeStr) {
         pattern);
   options[name + "Id"] = pattern.id;
 };
+*/
+
+var createMultiTypePattern = function(types, sizeStr) {
+  var name = types.join('') + "TypePattern" + sizeStr;
+  var basicStep = (sizeStr == "Small" ? 6 : 10);
+  var dimension = types.length * basicStep * 2;
+  console.log("PATH dim ", dimension);
+  var pattern = Blockly.createSvgElement('pattern',
+      {'id': name + rnd,
+        'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
+        'patternUnits': 'userSpaceOnUse'}, defs);
+  var pathStrings = [];
+  if (types.length == 2) {
+    //pathStrings.push("M0,0 A,0 D,C D,D C,D 0,A z  M0,C A,D 0,D z MC,0 D,0, D,A z");
+    pathStrings.push("M0,A C,D A,D 0,C z MA,0 C,0 D,A D,C z");
+  }
+  else {
+    pathStrings.push("M0,0 A,0 F,E F,F E,F 0,A z  M0,E A,F 0,F z ME,0 F,0 F,A z");
+    pathStrings.push("M0,A E,F C,F 0,C z MC,0 E,0 F,A F,C z");
+    pathStrings.push("M0,C C,F A,F 0,E z MA,0 C,0 F,C F,E z");
+  }
+
+
+  Blockly.createSvgElement('rect',
+      {'d' : pathStrings[i],
+        'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
+        'fill': Blockly.Python.COLOUR[types[1]],
+        'shape-rendering': 'crispEdges',
+        'image-rendering': 'crispEdges'
+
+      },
+      pattern);
+
+
+  for (var i in pathStrings) {
+    console.log("PATH before ", pathStrings[i]);
+    pathStrings[i] = pathStrings[i].replace(/A/g, basicStep);
+    pathStrings[i] = pathStrings[i].replace(/B/g, basicStep * 2);
+    pathStrings[i] = pathStrings[i].replace(/C/g, basicStep * 3);
+    pathStrings[i] = pathStrings[i].replace(/D/g, basicStep * 4);
+    pathStrings[i] = pathStrings[i].replace(/E/g, basicStep * 5);
+    pathStrings[i] = pathStrings[i].replace(/F/g, basicStep * 6);
+    console.log("PATH after ", pathStrings[i]);
+    Blockly.createSvgElement('path',
+        {'d' : pathStrings[i],
+          //'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
+          'fill': Blockly.Python.COLOUR[types[i]],
+         'shape-rendering': 'crispEdges',
+         'image-rendering': 'crispEdges'
+        },
+        pattern);
+  }
+  options[name + "Id"] = pattern.id;
+};
+
+
 
   //createTwoTypePatternSmall("float", "int");
 
@@ -447,10 +504,10 @@ var createMultiTypePattern = function(types, sizeStr) {
 /*
   var numericalTypePatternLarge = Blockly.createSvgElement('pattern',
       {'id': 'blocklyNumericalTypePatternLarge' + rnd,
-        'x': 0, 'y': 0, 'width': 30, 'height': 30,
+        'x': 0, 'y': 0, 'width': F, 'height': F,
         'patternUnits': 'userSpaceOnUse'}, defs);
   Blockly.createSvgElement('rect',
-          {'x': 0, 'y': 0, 'width': 30, 'height': 30,
+          {'x': 0, 'y': 0, 'width': F, 'height': F,
           'fill': 'url(#blocklyNumericalTypeGradient' +  rnd + ')'},
           numericalTypePatternLarge);
   options.numericalTypePatternLargeId = numericalTypePatternLarge.id;
