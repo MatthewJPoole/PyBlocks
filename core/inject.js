@@ -337,11 +337,12 @@ Blockly.createDom_ = function(container, options) {
        'x1': 1, 'x2': 0.5, 'y1': 0, 'y2': 0.5,
        'spreadMethod': 'repeat'}, defs);
   //var offsets = [0, 0.06, 0.14, 0.26, 0.34, 0.46, 0.54, 0.66, 0.74, 0.86, 0.94, 1.0];
-  var offsets = [0, 0.125, 0.375, 0.625, 0.875, 1.0];
+  //var offsets = [0, 0.125, 0.375, 0.625, 0.875, 1.0];
+  var offsets = [0, 0.167, 0.333, 0.5, 0.667, 0.833, 1.0];
   //var colours = ['float', 'range', 'bool', 'str', 'int', 'float'];
   for (var i in Blockly.Python.RAINBOW) {
     Blockly.createSvgElement('stop',
-        {'stop-color': Blockly.Python.COLOUR[Blockly.Python.RAINBOW[i]],
+        {'stop-color': Blockly.Python.RAINBOW[i],
         'offset': offsets[i]},
         anyTypeGradient);
   //  Blockly.createSvgElement('stop',
@@ -357,10 +358,10 @@ Blockly.createDom_ = function(container, options) {
   */
   var anyTypePatternLarge = Blockly.createSvgElement('pattern',
       {'id': 'blocklyAnyTypePatternLarge' + rnd,
-        'x': 0, 'y': 0, 'width': 38, 'height': 38,
+        'x': 0, 'y': 0, 'width': 50, 'height': 50,
         'patternUnits': 'userSpaceOnUse'}, defs);
   Blockly.createSvgElement('rect',
-          {'x': 0, 'y': 0, 'width': 38, 'height': 38,
+          {'x': 0, 'y': 0, 'width': 50, 'height': 50,
           'fill': 'url(#blocklyAnyTypeGradient' +  rnd + ')'},
           anyTypePatternLarge);
   options.anyTypePatternLargeId = anyTypePatternLarge.id;
@@ -445,7 +446,7 @@ var createMultiTypePattern = function(types, sizeStr) {
         'patternUnits': 'userSpaceOnUse'}, defs);
   var pathStrings = [];
   if (types.length == 2) {
-    //pathStrings.push("M0,0 A,0 D,C D,D C,D 0,A z  M0,C A,D 0,D z MC,0 D,0, D,A z");
+    pathStrings.push("M0,0 A,0 D,C D,D C,D 0,A z  M0,C A,D 0,D z MC,0 D,0, D,A z");
     pathStrings.push("M0,A C,D A,D 0,C z MA,0 C,0 D,A D,C z");
   }
   else {
@@ -454,17 +455,17 @@ var createMultiTypePattern = function(types, sizeStr) {
     pathStrings.push("M0,C C,F A,F 0,E z MA,0 C,0 F,C F,E z");
   }
 
-
+/*
   Blockly.createSvgElement('rect',
       {'d' : pathStrings[i],
         'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
         'fill': Blockly.Python.COLOUR[types[1]],
-        'shape-rendering': 'crispEdges',
-        'image-rendering': 'crispEdges'
+        //'shape-rendering': 'crispEdges',
+        //'image-rendering': 'crispEdges'
 
       },
       pattern);
-
+*/
 
   for (var i in pathStrings) {
     console.log("PATH before ", pathStrings[i]);
@@ -480,7 +481,7 @@ var createMultiTypePattern = function(types, sizeStr) {
           //'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
           'fill': Blockly.Python.COLOUR[types[i]],
          'shape-rendering': 'crispEdges',
-         'image-rendering': 'crispEdges'
+         //'image-rendering': 'crispEdges'
         },
         pattern);
   }

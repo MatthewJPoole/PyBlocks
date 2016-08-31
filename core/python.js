@@ -32,7 +32,7 @@ goog.provide('Blockly.Python');
 
 /*
 Blockly.Python.COLOUR['notype'] = '#8B7D6B';
-Blockly.Python.COLOUR['int'] = '#dfdf20';   //yellow
+Blockly.Python.COLOUR['int'] = ;   //yellow
 Blockly.Python.COLOUR['float'] = '#FF1919'; // red
 Blockly.Python.COLOUR['range'] = '#00CC33';  // green
 Blockly.Python.COLOUR['bool'] = '#FF29FF'; // magenta
@@ -40,14 +40,23 @@ Blockly.Python.COLOUR['str'] = '#0080FF' ; // blue
 */
 
 
+var red =    '#FF1919'; // '#FF4500';
+var orange = '#ff9000';
+var yellow = '#dfdf20';
+var green = '#00CC33' ;
+var cyan = '#40E0D0';
+var blue =  '#0080FF';
+var magenta = '#FF29FF';
+
+
 Blockly.Python.COLOUR = {};
 Blockly.Python.COLOUR['notype'] = '#8B7D6B';
-Blockly.Python.COLOUR['str'] = '#FF29FF';
-Blockly.Python.COLOUR['range'] = '#00CED1';   // '#40E0D0';
-Blockly.Python.COLOUR['int'] = '#FF8C00' ;
-Blockly.Python.COLOUR['float'] = '#0080FF';
-Blockly.Python.COLOUR['bool'] = '#00CC33';
-Blockly.Python.RAINBOW = ['str', 'int', 'float', 'bool', 'range', 'str'];
+Blockly.Python.COLOUR['float'] = green;
+Blockly.Python.COLOUR['int'] = blue;
+Blockly.Python.COLOUR['str'] = magenta;
+Blockly.Python.COLOUR['range'] = orange;
+Blockly.Python.COLOUR['bool'] = red;
+Blockly.Python.RAINBOW = [red, orange, green, cyan, blue, magenta, red];
 
 Blockly.Python.NEW_VARS = [
     {name: "newIntVariable", type: 'int'},
