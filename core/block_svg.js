@@ -965,7 +965,7 @@ Blockly.BlockSvg.SEP_SPACE_X = 0; // MJP
  * Horizontal space for empty slots
  * @const
  */
-Blockly.BlockSvg.SLOT_WIDTH = 50; // MJP
+Blockly.BlockSvg.SLOT_WIDTH = 54; // MJP
 /**
  * Horizontal space for empty wide slots
  * @const
@@ -1014,13 +1014,13 @@ Blockly.BlockSvg.MIN_BLOCK_Y = 24;
 * Height of type indicator.
 * @const
 */
-Blockly.BlockSvg.INDICATOR_HEIGHT = 15;
+Blockly.BlockSvg.INDICATOR_HEIGHT = 17;
 
 /**
 * Width of type indicator.
 * @const
 */
-Blockly.BlockSvg.INDICATOR_WIDTH = 30;
+Blockly.BlockSvg.INDICATOR_WIDTH = 34;
 
 /**
 * Gap underneath type indicator.
@@ -1515,15 +1515,14 @@ Blockly.BlockSvg.prototype.updateColour = function() {
       if (outputTypes[0] == "any" || outputTypes[0] == "matching") {
         fillText = 'url(#' + this.workspace.options.anyTypePatternLargeId + ')';
       }
-      else if (outputTypes.length == 2) { // should be list of int/float
+      else if (outputTypes.length == 1) { // should be list of int/float
+        fillText = Blockly.Python.COLOUR[outputTypes[0]];
+      } else {
         outputTypes.sort();
         var typeString = outputTypes.join('');
         var fillUrl = this.workspace.options[typeString + 'TypePatternLargeId'];
         console.log("FILLNUMTEXT1 " + typeString);
         fillText = 'url(#' + fillUrl  + ')';
-      }
-      else { // should be just one type
-        fillText = Blockly.Python.COLOUR[outputTypes[0]];
       }
       this.svgBlockPath_.setAttribute('fill', fillText);
     }
@@ -2182,15 +2181,15 @@ Blockly.BlockSvg.prototype.renderDraw_ = function(iconWidth, inputRows) {
   }
 
   if (this.outputConnection && this.outputsAList()) {
-    var tempListRectWidth = 0.24 * (this.width - 1);
+    var tempListRectWidth = 0.28 * (this.width - 1);
     var tempListGapWidth = (this.width - 1 - tempListRectWidth * 3) / 2;
     for (var i=0; i<3; i++) {
-      this.svgListRects[i].setAttribute('x',0);
+      this.svgListRects[i].setAttribute('x', (0.5 + i * (tempListRectWidth + tempListGapWidth)).toString());
       this.svgListRects[i].setAttribute('y', 0.5);
       this.svgListRects[i].setAttribute('width', tempListRectWidth);
       this.svgListRects[i].setAttribute('height', this.height-1);
-      this.svgListRects[i].setAttribute('transform', 'translate('+
-         (0.5 + i * (tempListRectWidth + tempListGapWidth)).toString() + ',0)');
+    //  this.svgListRects[i].setAttribute('transform', 'translate('+
+    //     (0.5 + i * (tempListRectWidth + tempListGapWidth)).toString() + ',0)');
     }
   }
 };
@@ -2398,7 +2397,7 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
               background.setAttribute('fill', 'white');
               indicatorPair.list = [background];
               //var group = Blockly.createSvgElement('g',{});
-              var tempListRectWidth = 0.24 *
+              var tempListRectWidth = 0.30 *
                   (Blockly.BlockSvg.INDICATOR_WIDTH);
               var tempListGapWidth = (Blockly.BlockSvg.INDICATOR_WIDTH -
                   tempListRectWidth * 3) / 2;
@@ -2407,13 +2406,13 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
                   this.svgGroup_);
                   //this.indicatorGroup);
                 //stripe.setAttribute('x', i * (tempListRectWidth + tempListGapWidth));
-                stripe.setAttribute('x', 0);
-                stripe.setAttribute('y', 0);
+                stripe.setAttribute('x', (indicatorX + i * (tempListRectWidth + tempListGapWidth)));
+                stripe.setAttribute('y', indicatorY);
                 stripe.setAttribute('width', tempListRectWidth);
                 stripe.setAttribute('height', Blockly.BlockSvg.INDICATOR_HEIGHT);
-                stripe.setAttribute('transform', 'translate('+
-                    (indicatorX + i * (tempListRectWidth + tempListGapWidth))
-                       + ', '  + indicatorY + ')');
+              //  stripe.setAttribute('transform', 'translate('+
+              //      (indicatorX + i * (tempListRectWidth + tempListGapWidth))
+              //         + ', '  + indicatorY + ')');
                 //stripe.setAttribute('transform', 'translate('+
                 //    (0.5 + indicatorX) + ', '  + indicatorY + ')');
                 indicatorPair.list.push(stripe);

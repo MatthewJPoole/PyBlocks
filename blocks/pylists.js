@@ -129,6 +129,7 @@ Blockly.Blocks['python_list_index'] = {
         .appendField("[");
     this.appendDummyInput()
         .appendField("]");
+    this.setOperator(16);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["*matching", "int", "matching"],
@@ -189,6 +190,7 @@ Blockly.Blocks['python_list_slice12'] = {
         .appendField(":");
     this.appendDummyInput()
         .appendField("]");
+    this.setOperator(16);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["*matching", "int", "int", "*matching"],
@@ -208,6 +210,7 @@ Blockly.Blocks['python_list_slice1'] = {
         .appendField(":");
     this.appendDummyInput()
         .appendField("]");
+    this.setOperator(16);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["*matching", "int", "*matching"],
@@ -227,6 +230,7 @@ Blockly.Blocks['python_list_slice2'] = {
         .appendField(":");
     this.appendDummyInput()
         .appendField("]");
+    this.setOperator(16);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["*matching", "int", "*matching"],
@@ -281,7 +285,9 @@ Blockly.Blocks['python_list_min'] = {
         .appendField(")");
     this.setInputsInline(true);
     this.setTypeVecs([
-      ["*matching", "matching"]
+      ["*int", "int"],
+      ["*float", "float"],
+      ["*str", "str"]
     ]);
     this.setOutput(true);
     this.setTooltip('');
@@ -297,7 +303,9 @@ Blockly.Blocks['python_list_max'] = {
         .appendField(")");
     this.setInputsInline(true);
     this.setTypeVecs([
-      ["*matching", "matching"]
+      ["*int", "int"],
+      ["*float", "float"],
+      ["*str", "str"]
     ]);
     this.setOutput(true);
     this.setTooltip('');
@@ -313,7 +321,9 @@ Blockly.Blocks['python_sorted'] = {
         .appendField(")");
     this.setInputsInline(true);
     this.setTypeVecs([
-      ["*matching", "*matching"]
+      ["*int", "*int"],
+      ["*float", "*float"],
+      ["*str", "*str"]
     ]);
     this.setOutput(true);
     this.setTooltip('');
@@ -404,11 +414,11 @@ Blockly.Blocks['python_pop'] = {
     this.appendValueInput("ARG1");
     this.appendDummyInput()
         .appendField(".pop()");
+    this.setOperator(16);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["*matching", "matching"]
     ]);
-    this.setLhsVarOnly(true);
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
@@ -475,7 +485,9 @@ Blockly.Blocks['python_sort'] = {
         .appendField(".sort()");
     this.setInputsInline(true);
     this.setTypeVecs([
-      ["*any", "none"]
+      ["*float", "none"],
+      ["*int", "none"],
+      ["*str", "none"]
     ]);
     this.setLhsVarOnly(true);
     this.setPreviousStatement(true);
@@ -492,6 +504,7 @@ Blockly.Blocks['python_list_index_method'] = {
         .appendField(".index(");
     this.appendDummyInput()
         .appendField(")");
+    this.setOperator(16);
     this.setInputsInline(true);
     this.setTypeVecs([
       ["*matching", "matching", "int"]

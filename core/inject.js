@@ -480,7 +480,7 @@ var createMultiTypePattern = function(types, sizeStr) {
         {'d' : pathStrings[i],
           //'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
           'fill': Blockly.Python.COLOUR[types[i]],
-         'shape-rendering': 'crispEdges',
+          'shape-rendering': 'crispEdges',
          //'image-rendering': 'crispEdges'
         },
         pattern);
@@ -499,6 +499,7 @@ var createMultiTypePattern = function(types, sizeStr) {
   createMultiTypePattern(["float", "int", "str"], "Small");
   createMultiTypePattern(["float", "int"], "Large");
   createMultiTypePattern(["int", "str"], "Large");
+  createMultiTypePattern(["float", "int", "str"], "Large");
 
   //options.numericalTypeGradientId = numericalTypeGradient.id;
   console.log("CREATED: ", options);
