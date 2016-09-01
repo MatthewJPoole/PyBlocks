@@ -2657,14 +2657,23 @@ Blockly.Block.prototype.checkParentheses = function() {
           return;
         }
       }
+      // highest precedence operators don't have LPAR and RPAR fields
+      var lpar = this.getField("LPAR");
+      var rpar = this.getField("RPAR");
       // add parentheses
-      this.setFieldValue("(", "LPAR");
-      this.setFieldValue(")", "RPAR");
+      if (lpar) {
+        lpar.setValue("(");
+        rpar.setValue(")");
+      }
     }
     else {
       // remove parentheses which may or may not be present
-      this.setFieldValue("", "LPAR");
-      this.setFieldValue("", "RPAR");
+      var lpar = this.getField("LPAR");
+      var rpar = this.getField("RPAR");
+      if (lpar) {
+        this.setFieldValue("", "LPAR");
+        this.setFieldValue("", "RPAR");
+      }
     }
   }
 };
