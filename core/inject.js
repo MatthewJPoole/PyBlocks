@@ -383,7 +383,7 @@ Blockly.createDom_ = function(container, options) {
   options.anyTypePatternSmallId = anyTypePatternSmall.id;
 
 
-
+/*
   var createMultiTypeGradient = function(types) {
     var name = types.join('') + "TypeGradient";
     var gradient = Blockly.createSvgElement('linearGradient',
@@ -417,7 +417,7 @@ Blockly.createDom_ = function(container, options) {
   createMultiTypeGradient(["range", "str"]);
   createMultiTypeGradient(["int", "str"]);
   createMultiTypeGradient(["float", "int", "str"]);
-
+*/
 
 /*
 var createMultiTypePattern = function(types, sizeStr) {
@@ -500,6 +500,10 @@ var createMultiTypePattern = function(types, sizeStr) {
   createMultiTypePattern(["float", "int"], "Large");
   createMultiTypePattern(["int", "str"], "Large");
   createMultiTypePattern(["float", "int", "str"], "Large");
+
+  // temporary
+  createMultiTypePattern(["float", "negint"], "Small");
+  createMultiTypePattern(["float", "nonnegint"], "Small");
 
   //options.numericalTypeGradientId = numericalTypeGradient.id;
   console.log("CREATED: ", options);

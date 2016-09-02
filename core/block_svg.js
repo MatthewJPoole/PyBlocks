@@ -1512,6 +1512,8 @@ Blockly.BlockSvg.prototype.updateColour = function() {
     }
     else {
       var outputTypes = this.getOutputTypesByKind().basic;
+      outputTypes = Blockly.Python.mergeSubtypes(outputTypes);
+
       if (outputTypes[0] == "any" || outputTypes[0] == "matching") {
         fillText = 'url(#' + this.workspace.options.anyTypePatternLargeId + ')';
       }
@@ -1539,6 +1541,7 @@ Blockly.BlockSvg.prototype.updateColour = function() {
     var indicatorPair = this.indicators[emptySlotNumber];
     if (indicatorPair.basic) {
       var basicTypes = this.getInputTypesByKind(emptySlotNumber).basic;
+      basicTypes = Blockly.Python.mergeSubtypes(basicTypes);
       console.log("UCOL position ", emptySlotNumber, basicTypes);
       if (basicTypes[0] == "any" || basicTypes[0] == "matching") {
         fillText = 'url(#' + this.workspace.options.anyTypePatternSmallId + ')';

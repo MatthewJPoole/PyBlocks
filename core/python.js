@@ -60,6 +60,80 @@ Blockly.Python.COLOUR['float'] = blue;
 Blockly.Python.COLOUR['bool'] = magenta;
 Blockly.Python.RAINBOW = [red, yellow, green, cyan, blue, magenta, red];
 
+
+// Temporary colours
+Blockly.Python.COLOUR['nonnegint'] = yellow;
+Blockly.Python.COLOUR['negint'] = orange;
+
+Blockly.Python.SUBTYPES = {
+  'int': ['negint', 'nonnegint']
+
+};
+
+Blockly.Python.SUBTYPE_SYMBOLS = {
+  'negint': '-',
+  'nonnegint': '+'
+};
+
+Blockly.Python.SUPERTYPES = {
+  'negint': 'int',
+  'nonnegint': 'int'
+};
+
+Blockly.Python.SUPTYPE_CHECK = {
+  'negint': function(block) {
+    if (block.type != 'python_int_const') {
+      return false;
+    }
+    var value = block.getFieldValue("VALUE");
+    return (Number(value) < 0);
+  },
+
+  'nonnegint': function(block) {
+    if (block.type == 'python_abs') {
+      return true;
+    }
+    if (block.type != 'python_int_const') {
+      return false;
+    }
+    var value = block.getFieldValue("VALUE");
+      return (Number(value) >= 0);
+  }
+};
+
+// deal with subtypes in a list of types
+Blockly.Python.mergeSubtypes = function(typeList) {
+
+  // if int is not here but both subtypes are, add int
+  var intIndex = typeList.indexOf('int');
+  if (intIndex == -1) {
+    var allSubtypes = true;
+    for (var subType in Blockly.Python.SUPERTYPES) {
+      if (typeList.indexOf(subType) == -1) {
+        allSubtypes = false;
+        break;
+      }
+    }
+    if (allSubtypes) {
+      console.log("MERGEST all subtypes so adding int");
+      typeList.push('int');
+    }
+  }
+
+  // if int is here, remove the subtypes
+  var intIndex = typeList.indexOf('int');
+  if (intIndex != -1) {
+    for (var subType in Blockly.Python.SUPERTYPES) {
+      var pos = typeList.indexOf(subType);
+      if (pos != -1) {
+        console.log("MERGEST int present so removing " + subType);
+        typeList.splice(pos, 1);
+      }
+    }
+  }
+  return typeList;
+};
+
 Blockly.Python.NEW_VARS = [
     {name: "newIntVariable", type: 'int'},
     {name: "newFloatVariable", type: 'float'},

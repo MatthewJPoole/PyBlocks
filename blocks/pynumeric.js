@@ -33,7 +33,8 @@ Blockly.Blocks['python_int_const'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldTextInput("42"), "VALUE");
     this.setInputsInline(true);
-    this.setTypeVecs([["int"]]);
+    this.setTypeVecs([["int"], ["nonnegint"], ["negint"]]);
+    this.typeVecs = [["int"], ["negint"]];
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
@@ -203,7 +204,8 @@ Blockly.Blocks['python_pow_op'] = {
     this.setOperator(14);
     this.setInputsInline(true);
     this.setTypeVecs([
-      ["int", "int", "int"],
+      ["int", "nonnegint", "int"],
+      ["int", "negint", "float"],
       ["float", "int", "float"],
       ["int", "float", "float"],
       ["float", "float", "float"]
@@ -243,6 +245,7 @@ Blockly.Blocks['python_abs'] = {
     this.setInputsInline(true);
     this.setTypeVecs([
       ["int", "int"],
+      ["int", "nonnegint"],
       ["float", "float"]
     ]);
     this.setOutput(true);
@@ -278,8 +281,8 @@ Blockly.Blocks['python_pow'] = {
         .appendField(")");
     this.setInputsInline(true);
     this.setTypeVecs([
-      ["int", "int", "int"],
-      ["int", "int", "float"],
+      ["int", "nonnegint", "int"],
+      ["int", "negint", "float"],
       ["float", "int", "float"],
       ["int", "float", "float"],
       ["float", "float", "float"]

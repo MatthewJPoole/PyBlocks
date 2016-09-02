@@ -125,6 +125,12 @@ Blockly.Toolbox.prototype.init = function() {
     floatintstrTypePatternLargeId: workspace.options.floatintstrTypePatternLargeId,
     floatintstrTypePatternSmallId: workspace.options.floatintstrTypePatternSmallId,
     rangestrTypePatternSmallId: workspace.options.rangestrTypePatternSmallId,
+
+    //temporary
+    floatnegintTypePatternSmallId: workspace.options.floatnegintTypePatternSmallId,
+    floatnonnegintTypePatternSmallId: workspace.options.floatnonnegintTypePatternSmallId,
+
+
     parentWorkspace: workspace,
     RTL: workspace.RTL,
     svg: workspace.options.svg
