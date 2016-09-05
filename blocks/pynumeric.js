@@ -34,12 +34,37 @@ Blockly.Blocks['python_int_const'] = {
         .appendField(new Blockly.FieldTextInput("42"), "VALUE");
     this.setInputsInline(true);
     this.setTypeVecs([["int"], ["nonnegint"], ["negint"]]);
-    this.typeVecs = [["int"], ["negint"]];
     this.setOutput(true);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
     this.getField('VALUE').setChangeHandler(
         Blockly.FieldTextInput.integerValidator);
+    this.restrictTypes();
+  },
+
+  restrictTypes: function() {
+    if (Number(this.getFieldValue('VALUE') >= 0)) {
+      this.typeVecs = [["int"], ["nonnegint"]];
+    }
+    else {
+      this.typeVecs = [["int"], ["negint"]];
+    }
+  },
+
+  checkValue: function(text) {
+    var currentTypes = this.getOutputTypes();
+    if (currentTypes.indexOf("int") > -1) {
+      //this.restrictTypes();
+      return text;
+    }
+    var value = Number(text);
+    if (value >= 0 && currentTypes.indexOf("nonnegint") > -1) {
+      return text;
+    }
+    if (value < 0 && currentTypes.indexOf("negint") > -1) {
+      return text;
+    }
+    return null;
   }
 };
 

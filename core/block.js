@@ -850,6 +850,9 @@ Blockly.Block.prototype.restoreFullTypes = function() {
   this.typeVecs = Array(this.fullTypeVecs.length);
   for (var i=0; i<this.fullTypeVecs.length; i++) {
     this.typeVecs[i] = this.fullTypeVecs[i].slice(0);
+    if (this.restrictTypes) {
+      this.restrictTypes();
+    }
   }
   for (var i=0, child; child=this.childBlocks_[i]; i++) {
     if (child.outputConnection) {
