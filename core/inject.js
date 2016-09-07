@@ -435,11 +435,16 @@ var createMultiTypePattern = function(types, sizeStr) {
 };
 */
 
-var createMultiTypePattern = function(types, sizeStr) {
-  var name = types.join('') + "TypePattern" + sizeStr;
-  var basicStep = (sizeStr == "Small" ? 6 : 10);
+
+
+
+
+
+
+var createMultiTypeBlockPattern = function(types) {
+  var name = types.join('') + "TypePatternLarge";
+  var basicStep = 10;
   var dimension = types.length * basicStep * 2;
-  console.log("PATH dim ", dimension);
   var pattern = Blockly.createSvgElement('pattern',
       {'id': name + rnd,
         'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
@@ -455,18 +460,6 @@ var createMultiTypePattern = function(types, sizeStr) {
     pathStrings.push("M0,C C,F A,F 0,E z MA,0 C,0 F,C F,E z");
   }
 
-/*
-  Blockly.createSvgElement('rect',
-      {'d' : pathStrings[i],
-        'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
-        'fill': Blockly.Python.COLOUR[types[1]],
-        //'shape-rendering': 'crispEdges',
-        //'image-rendering': 'crispEdges'
-
-      },
-      pattern);
-*/
-
   for (var i in pathStrings) {
     console.log("PATH before ", pathStrings[i]);
     pathStrings[i] = pathStrings[i].replace(/A/g, basicStep);
@@ -475,35 +468,111 @@ var createMultiTypePattern = function(types, sizeStr) {
     pathStrings[i] = pathStrings[i].replace(/D/g, basicStep * 4);
     pathStrings[i] = pathStrings[i].replace(/E/g, basicStep * 5);
     pathStrings[i] = pathStrings[i].replace(/F/g, basicStep * 6);
-    console.log("PATH after ", pathStrings[i]);
+    var type = types[i];
+    var colour = Blockly.Python.COLOUR[type];
     Blockly.createSvgElement('path',
         {'d' : pathStrings[i],
           //'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
-          'fill': Blockly.Python.COLOUR[types[i]],
+          'fill': colour,
           'shape-rendering': 'crispEdges',
          //'image-rendering': 'crispEdges'
         },
         pattern);
+  }
+  // currently hardcoded for '-' placement on int/float indicator
+  options[name + "Id"] = pattern.id;
+};
+
+var createMultiTypeIndicatorPattern = function(types) {
+  var basicStep = Blockly.BlockSvg.INDICATOR_HEIGHT / 6;
+  var name = types.join('') + "TypePatternSmall";
+  var pattern = Blockly.createSvgElement('pattern',
+      {'id': name + rnd,
+        'x': 0, 'y': 0, 'width': Blockly.BlockSvg.INDICATOR_WIDTH,
+        'height': Blockly.BlockSvg.INDICATOR_HEIGHT,
+        'patternUnits': 'userSpaceOnUse'}, defs);
+  var pathStrings = [];
+  if (types.length == 2) {
+    pathStrings.push("MA,0 C,0 H,D E,D z M0,B B,D 0,D z MF,0 H,0 H,B z");
+    pathStrings.push("M0,0 A,0 E,D B,D 0,B z MC,0 F,0 H,B H,D G,D z");
+  }
+  else {
+    pathStrings.push("MB,0 E,0 H,C H,D F,D z M0,C A,D 0,D z");
+    pathStrings.push("M0,0 B,0 F,D C,D 0,A z MG,0 H,0 H,A z");
+    pathStrings.push("M0,A C,D A,D 0,C z ME,0 G,0 H,A H,C z");
+  }
+
+  var subtypeSymbol = null;
+  for (var i in pathStrings) {
+    console.log("PATHIND ", pathStrings[i]);
+    pathStrings[i] = pathStrings[i].replace(/A/g, basicStep);
+    pathStrings[i] = pathStrings[i].replace(/B/g, basicStep * 3);
+    pathStrings[i] = pathStrings[i].replace(/C/g, basicStep * 5);
+    pathStrings[i] = pathStrings[i].replace(/D/g, basicStep * 6);
+    pathStrings[i] = pathStrings[i].replace(/E/g, basicStep * 7);
+    pathStrings[i] = pathStrings[i].replace(/F/g, basicStep * 9);
+    pathStrings[i] = pathStrings[i].replace(/G/g, basicStep * 11);
+    pathStrings[i] = pathStrings[i].replace(/H/g, basicStep * 12);
+    console.log("PATHIND ", pathStrings[i]);
+
+    var colour;
+    var type = types[i];
+    if (type in Blockly.Python.SUPERTYPES) {
+      colour = Blockly.Python.COLOUR[Blockly.Python.SUPERTYPES[type]];
+      subtypeSymbol = Blockly.Python.PATTERNED_SUBTYPE_SYMBOLS[type];
+    }
+
+    else {
+      colour = Blockly.Python.COLOUR[type];
+    }
+    Blockly.createSvgElement('path',
+        {'d' : pathStrings[i],
+          //'x': 0, 'y': 0, 'width': dimension, 'height': dimension,
+          'fill': colour,
+          'shape-rendering': 'crispEdges',
+         //'image-rendering': 'crispEdges'
+        },
+        pattern);
+  }
+  // currently hardcoded for '-' placement on int/float indicator
+  if (subtypeSymbol !== null) {
+    var coords = [{x: basicStep * 2.3, y: basicStep * 1.1},
+                  {x: basicStep * 3.2, y: basicStep * 2.0},
+                  {x: basicStep * 0.3, y: basicStep * 2.9}];
+    for (var i = 0; i < coords.length; i++) {
+      var text = Blockly.createSvgElement('text', {
+        'class': 'blocklyIndicatorSymbol',
+        'x': coords[i].x,
+        'y': coords[i].y
+      },
+      pattern);
+      text.appendChild(document.createTextNode(subtypeSymbol));
+    }
   }
   options[name + "Id"] = pattern.id;
 };
 
 
 
+
+
+
+
   //createTwoTypePatternSmall("float", "int");
 
-  createMultiTypePattern(["float", "int"], "Small");
-  createMultiTypePattern(["float", "str"], "Small");
-  createMultiTypePattern(["range", "str"], "Small");
-  createMultiTypePattern(["int", "str"], "Small");
-  createMultiTypePattern(["float", "int", "str"], "Small");
-  createMultiTypePattern(["float", "int"], "Large");
-  createMultiTypePattern(["int", "str"], "Large");
-  createMultiTypePattern(["float", "int", "str"], "Large");
+  createMultiTypeIndicatorPattern(["float", "int"]);
+  createMultiTypeIndicatorPattern(["float", "str"]);
+  createMultiTypeIndicatorPattern(["range", "str"]);
+  createMultiTypeIndicatorPattern(["int", "str"]);
+  createMultiTypeIndicatorPattern(["float", "int", "str"]);
+
+  createMultiTypeBlockPattern(["float", "int"]);
+  createMultiTypeBlockPattern(["int", "str"]);
+  createMultiTypeBlockPattern(["float", "int", "str"]);
 
   // temporary
-  createMultiTypePattern(["float", "negint"], "Small");
-  createMultiTypePattern(["float", "nonnegint"], "Small");
+  createMultiTypeIndicatorPattern(["float", "negint"]);
+  createMultiTypeIndicatorPattern(["float", "nonnegint"]);
 
   //options.numericalTypeGradientId = numericalTypeGradient.id;
   console.log("CREATED: ", options);

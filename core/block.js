@@ -1419,8 +1419,7 @@ Blockly.Block.prototype.getInputKinds = function(index) {
 };
 
 
-Blockly.
-Block.prototype.getInputTypes = function(index) {
+Blockly.Block.prototype.getInputTypes = function(index) {
   var paramTypes = [];
   var typeVecs = this.typeVecs;
   for (var i=0; i < typeVecs.length; i++) {

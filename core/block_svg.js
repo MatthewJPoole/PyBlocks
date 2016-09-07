@@ -1014,13 +1014,13 @@ Blockly.BlockSvg.MIN_BLOCK_Y = 24;
 * Height of type indicator.
 * @const
 */
-Blockly.BlockSvg.INDICATOR_HEIGHT = 17;
+Blockly.BlockSvg.INDICATOR_HEIGHT = 18;
 
 /**
 * Width of type indicator.
 * @const
 */
-Blockly.BlockSvg.INDICATOR_WIDTH = 34;
+Blockly.BlockSvg.INDICATOR_WIDTH = 36;
 
 /**
 * Gap underneath type indicator.
@@ -1542,23 +1542,27 @@ Blockly.BlockSvg.prototype.updateColour = function() {
     if (indicatorPair.basic) {
       var basicTypes = this.getInputTypesByKind(emptySlotNumber).basic;
       basicTypes = Blockly.Python.mergeSubtypes(basicTypes);
-      console.log("UCOL position ", emptySlotNumber, basicTypes);
+
+      for (var type in indicatorPair.subtypeLabels) {
+        if (basicTypes.length == 1 && basicTypes[0] == type) {
+          indicatorPair.subtypeLabels[type].setAttribute("display", "inline");
+        }
+        else {
+          indicatorPair.subtypeLabels[type].setAttribute("display", "none");
+        }
+      }
+
       if (basicTypes[0] == "any" || basicTypes[0] == "matching") {
         fillText = 'url(#' + this.workspace.options.anyTypePatternSmallId + ')';
       }
-      else if (basicTypes.length == 2) {
+      else if (basicTypes.length == 1) {
+        fillText = Blockly.Python.COLOUR[basicTypes[0]];
+      }
+      else {
         basicTypes.sort();
         var typeString = basicTypes.join('');
         var fillUrl = this.workspace.options[typeString + 'TypePatternSmallId'];
-        console.log("FILLNUMTEXT1 " + typeString);
         fillText = 'url(#' + fillUrl  + ')';
-        console.log("FILLNUMTEXT2 " + fillText);
-      }
-      else if (basicTypes.length == 3) {
-        fillText = 'url(#' + this.workspace.options.floatintstrTypePatternSmallId + ')';
-      }
-      else {
-        fillText = Blockly.Python.COLOUR[basicTypes[0]];
       }
       indicatorPair.basic.setAttribute('fill', fillText);
     }
@@ -2181,6 +2185,12 @@ Blockly.BlockSvg.prototype.renderDraw_ = function(iconWidth, inputRows) {
          this.svgIndicatorGroup.appendChild(ind);
       }
     }
+    if (indicatorPair.subtypeLabels) {
+      for (var type in indicatorPair.subtypeLabels) {
+        console.log("SUBTYPE adding to group" + indicatorPair.subtypeLabels[type]);
+         this.svgIndicatorGroup.appendChild(indicatorPair.subtypeLabels[type]);
+      }
+    }
   }
 
   if (this.outputConnection && this.outputsAList()) {
@@ -2240,6 +2250,15 @@ Blockly.BlockSvg.prototype.renderDrawTop_ =
   this.width = rightEdge;
 };
 
+Blockly.BlockSvg.addIndicatorLabel = function(x, y, label) {
+  var text = Blockly.createSvgElement('text', {});
+  text.setAttribute('class', 'blocklyIndicatorText');
+  text.setAttribute('x', x + Blockly.BlockSvg.INDICATOR_WIDTH / 2);
+  text.setAttribute('y', y + Blockly.BlockSvg.INDICATOR_HEIGHT - 3);
+  text.appendChild(document.createTextNode(label));
+  return text;
+};
+
 /**
  * Render the right edge of the block.
  * @param {!Array.<string>} steps Path of block outline.
@@ -2254,15 +2273,6 @@ Blockly.BlockSvg.prototype.renderDrawTop_ =
  */
 Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
     indicatorSteps, connectionsXY, inputRows, iconWidth) {
-
-  var addVarIndicator = function(x, y) {
-    var text = Blockly.createSvgElement('text', {});
-    text.setAttribute('class', 'blocklyIndicatorText');
-    text.setAttribute('x', x + Blockly.BlockSvg.INDICATOR_WIDTH / 2);
-    text.setAttribute('y', y + Blockly.BlockSvg.INDICATOR_HEIGHT - 3);
-    text.appendChild(document.createTextNode("var"));
-    return text;
-  };
 
   var cursorX;
   var cursorY = 0;
@@ -2364,7 +2374,8 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
             var indicatorPair = {
               'basic': null,
               'list': null,
-              'varInd': []
+              'varInd': [],
+              'subtypeLabels': {},
             };
             // Draw basic type indicator
 
@@ -2387,9 +2398,25 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
               indicatorPair.basic = indicator;
 
               if (slotNumber === 0 && this.lhsVarOnly) {
-                  var varInd = addVarIndicator(indicatorX, indicatorY);
+                  var varInd = Blockly.BlockSvg.addIndicatorLabel(indicatorX, indicatorY, "var");
                   indicatorPair.varInd.push(varInd);
               }
+
+              var types = this.getInputTypes(slotNumber);
+              console.log("SUBTYPE checking " + JSON.stringify(types));
+              for (var subtype in Blockly.Python.CENTRED_SUBTYPE_SYMBOLS) {
+                if (goog.array.contains(types, subtype)) {
+                  console.log("SUBTYPE found", subtype);
+                  var subtypeLabel =
+                    Blockly.BlockSvg.addIndicatorLabel(indicatorX, indicatorY,
+                       Blockly.Python.CENTRED_SUBTYPE_SYMBOLS[subtype]);
+                       console.log("SUBTYPE symbol added", Blockly.Python.CENTRED_SUBTYPE_SYMBOLS[subtype]);
+
+                  subtypeLabel.setAttribute("display", "none");
+                  indicatorPair.subtypeLabels[subtype] = subtypeLabel;
+                }
+              }
+
               indicatorX += Blockly.BlockSvg.INDICATOR_WIDTH +
                   Blockly.BlockSvg.INDICATOR_GAP_X;
             }
@@ -2421,7 +2448,7 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
                 indicatorPair.list.push(stripe);
               }
               if (slotNumber === 0 && this.lhsVarOnly) {
-                  var varInd = addVarIndicator(indicatorX, indicatorY);
+                  var varInd = Blockly.BlockSvg.addIndicatorLabel(indicatorX, indicatorY, "var");
                   indicatorPair.varInd.push(varInd);
               }
               //indicatorPair.list = ;

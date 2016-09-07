@@ -243,6 +243,15 @@ Blockly.Css.CONTENT = [
     'font-size: 15pt;',
    '}',
 
+
+  '.blocklyIndicatorSymbol {',
+    'text-anchor: middle;',
+    'fill: #fff;',
+   // 'writing-mode: tb;',
+    'font-family: monospace;',
+    'font-size: 10pt;',
+   '}',
+
    '.blocklyIndicatorText {',
      'text-anchor: middle;',
      'fill: #000;',

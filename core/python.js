@@ -62,17 +62,19 @@ Blockly.Python.RAINBOW = [red, yellow, green, cyan, blue, magenta, red];
 
 
 // Temporary colours
-Blockly.Python.COLOUR['nonnegint'] = yellow;
+Blockly.Python.COLOUR['nonnegint'] = green;
 Blockly.Python.COLOUR['negint'] = orange;
 
 Blockly.Python.SUBTYPES = {
   'int': ['negint', 'nonnegint']
-
 };
 
-Blockly.Python.SUBTYPE_SYMBOLS = {
+Blockly.Python.CENTRED_SUBTYPE_SYMBOLS = {
+  'nonnegint': '>=0'
+};
+
+Blockly.Python.PATTERNED_SUBTYPE_SYMBOLS = {
   'negint': '-',
-  'nonnegint': '+'
 };
 
 Blockly.Python.SUPERTYPES = {
@@ -103,6 +105,7 @@ Blockly.Python.SUPTYPE_CHECK = {
 
 // deal with subtypes in a list of types
 Blockly.Python.mergeSubtypes = function(typeList) {
+
 
   // if int is not here but both subtypes are, add int
   var intIndex = typeList.indexOf('int');
