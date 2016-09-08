@@ -451,13 +451,13 @@ var createMultiTypeBlockPattern = function(types) {
         'patternUnits': 'userSpaceOnUse'}, defs);
   var pathStrings = [];
   if (types.length == 2) {
-    pathStrings.push("M0,0 A,0 D,C D,D C,D 0,A z  M0,C A,D 0,D z MC,0 D,0, D,A z");
     pathStrings.push("M0,A C,D A,D 0,C z MA,0 C,0 D,A D,C z");
+    pathStrings.push("M0,0 A,0 D,C D,D C,D 0,A z  M0,C A,D 0,D z MC,0 D,0, D,A z");
   }
   else {
+    pathStrings.push("M0,C C,F A,F 0,E z MA,0 C,0 F,C F,E z");
     pathStrings.push("M0,0 A,0 F,E F,F E,F 0,A z  M0,E A,F 0,F z ME,0 F,0 F,A z");
     pathStrings.push("M0,A E,F C,F 0,C z MC,0 E,0 F,A F,C z");
-    pathStrings.push("M0,C C,F A,F 0,E z MA,0 C,0 F,C F,E z");
   }
 
   for (var i in pathStrings) {

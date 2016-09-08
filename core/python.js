@@ -42,7 +42,7 @@ Blockly.Python.COLOUR['str'] = '#0080FF' ; // blue
 
 
 var red =    '#FF3010'; // '#FF4500';
-var orange = '#ff9000';
+var orange = '#ffaa00';
 var yellow = '#dfdf20';
 var green = '#00CC33' ;
 var cyan = '#40E0D0';
@@ -55,7 +55,7 @@ Blockly.Python.COLOUR['notype'] = '#8B7D6B';
 Blockly.Python.COLOUR['str'] = red;
 // none = yellow
 Blockly.Python.COLOUR['int'] = green;
-Blockly.Python.COLOUR['range'] = cyan;
+Blockly.Python.COLOUR['range'] = orange;
 Blockly.Python.COLOUR['float'] = blue;
 Blockly.Python.COLOUR['bool'] = magenta;
 Blockly.Python.RAINBOW = [red, yellow, green, cyan, blue, magenta, red];

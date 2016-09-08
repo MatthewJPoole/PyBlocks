@@ -1582,10 +1582,10 @@ Blockly.BlockSvg.prototype.updateColour = function() {
       fillText = Blockly.Python.COLOUR[pListTypes[0]];
      }
      // ========================
-     for (var j=1; j<4; j++) {
-       var rect = indicatorPair.list[j];
+    // for (var j=1; j<4; j++) {
+       var rect = indicatorPair.list[0];
        rect.setAttribute('fill', fillText);
-     }
+     //}
    }
  }
 
@@ -2426,22 +2426,24 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps, holeSteps,
             // draw list type indicator
             if (params.list) {
               var background = createBasicIndicator(indicatorX, indicatorY);
-              background.setAttribute('fill', 'white');
+              //background.setAttribute('fill', 'white');
               indicatorPair.list = [background];
               //var group = Blockly.createSvgElement('g',{});
               var tempListRectWidth = 0.30 *
                   (Blockly.BlockSvg.INDICATOR_WIDTH);
               var tempListGapWidth = (Blockly.BlockSvg.INDICATOR_WIDTH -
                   tempListRectWidth * 3) / 2;
-              for (var i=0; i<3; i++) {
+              for (var i=0; i<2; i++) {
                 var stripe = Blockly.createSvgElement('rect',{},
                   this.svgGroup_);
                   //this.indicatorGroup);
                 //stripe.setAttribute('x', i * (tempListRectWidth + tempListGapWidth));
-                stripe.setAttribute('x', (indicatorX + i * (tempListRectWidth + tempListGapWidth)));
+                stripe.setAttribute('x', (indicatorX + tempListRectWidth + i *
+                  (tempListRectWidth + tempListGapWidth)));
                 stripe.setAttribute('y', indicatorY);
-                stripe.setAttribute('width', tempListRectWidth);
+                stripe.setAttribute('width', tempListGapWidth);
                 stripe.setAttribute('height', Blockly.BlockSvg.INDICATOR_HEIGHT);
+                stripe.setAttribute("fill", "white");
               //  stripe.setAttribute('transform', 'translate('+
               //      (indicatorX + i * (tempListRectWidth + tempListGapWidth))
               //         + ', '  + indicatorY + ')');
