@@ -63,7 +63,7 @@ Blockly.Python.RAINBOW = [red, yellow, green, cyan, blue, magenta, red];
 
 // Temporary colours
 Blockly.Python.COLOUR['nonnegint'] = green;
-Blockly.Python.COLOUR['negint'] = orange;
+Blockly.Python.COLOUR['negint'] = green;
 
 Blockly.Python.SUBTYPES = {
   'int': ['negint', 'nonnegint']

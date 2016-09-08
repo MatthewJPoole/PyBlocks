@@ -1581,6 +1581,7 @@ Blockly.BlockSvg.prototype.updateColour = function() {
        // should be just one type
       fillText = Blockly.Python.COLOUR[pListTypes[0]];
      }
+     // ========================
      for (var j=1; j<4; j++) {
        var rect = indicatorPair.list[j];
        rect.setAttribute('fill', fillText);
@@ -2193,6 +2194,7 @@ Blockly.BlockSvg.prototype.renderDraw_ = function(iconWidth, inputRows) {
     }
   }
 
+  // =================
   if (this.outputConnection && this.outputsAList()) {
     var tempListRectWidth = 0.28 * (this.width - 1);
     var tempListGapWidth = (this.width - 1 - tempListRectWidth * 3) / 2;

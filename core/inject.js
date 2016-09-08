@@ -488,18 +488,23 @@ var createMultiTypeIndicatorPattern = function(types) {
   var name = types.join('') + "TypePatternSmall";
   var pattern = Blockly.createSvgElement('pattern',
       {'id': name + rnd,
-        'x': 0, 'y': 0, 'width': Blockly.BlockSvg.INDICATOR_WIDTH,
-        'height': Blockly.BlockSvg.INDICATOR_HEIGHT,
-        'patternUnits': 'userSpaceOnUse'}, defs);
+        'x': 0, 'y': 0, 'width': 12, //Blockly.BlockSvg.INDICATOR_WIDTH,
+        'height': 6, //Blockly.BlockSvg.INDICATOR_HEIGHT,
+        'patternUnits': 'objectBoundingBox'}, defs);
   var pathStrings = [];
   if (types.length == 2) {
     pathStrings.push("MA,0 C,0 H,D E,D z M0,B B,D 0,D z MF,0 H,0 H,B z");
     pathStrings.push("M0,0 A,0 E,D B,D 0,B z MC,0 F,0 H,B H,D G,D z");
+    //pathStrings.push("M1,0 5,0 12,6 7,6 z M0,3 3,6 0,6 z M9,0 12,0 12,3 z");
+    //pathStrings.push("M0,0 1,0 7,6 3,6 0,3 z MC,0 9,0 12,3 12,6 11,6 z");
   }
   else {
-    pathStrings.push("MB,0 E,0 H,C H,D F,D z M0,C A,D 0,D z");
-    pathStrings.push("M0,0 B,0 F,D C,D 0,A z MG,0 H,0 H,A z");
-    pathStrings.push("M0,A C,D A,D 0,C z ME,0 G,0 H,A H,C z");
+    //pathStrings.push("MB,0 E,0 H,C H,D F,D z M0,C A,D 0,D z");
+    //pathStrings.push("M0,0 B,0 F,D C,D 0,A z MG,0 H,0 H,A z");
+    //pathStrings.push("M0,A C,D A,D 0,C z ME,0 G,0 H,A H,C z");
+    pathStrings.push("MA,0 C,0 G,D E,D z");
+    pathStrings.push("M0,0 A,0 E,D B,D 0,B z MF,0 H,0 H,F z");
+    pathStrings.push("M0,B B,D 0,D z MC,0 F,0 H,B H,D G,D z");
   }
 
   var subtypeSymbol = null;
@@ -536,12 +541,11 @@ var createMultiTypeIndicatorPattern = function(types) {
   }
   // currently hardcoded for '-' placement on int/float indicator
   if (subtypeSymbol !== null) {
-    var coords = [{x: basicStep * 2.3, y: basicStep * 1.1},
-                  {x: basicStep * 3.2, y: basicStep * 2.0},
-                  {x: basicStep * 0.3, y: basicStep * 2.9}];
+    var coords = [{x: basicStep * 2.2, y: basicStep * 4.5},
+                  {x: basicStep * 9.7, y: basicStep * 4.3}];
     for (var i = 0; i < coords.length; i++) {
       var text = Blockly.createSvgElement('text', {
-        'class': 'blocklyIndicatorSymbol',
+        'class': 'blocklyIndicatorText',
         'x': coords[i].x,
         'y': coords[i].y
       },
