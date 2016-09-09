@@ -435,12 +435,6 @@ var createMultiTypePattern = function(types, sizeStr) {
 };
 */
 
-
-
-
-
-
-
 var createMultiTypeBlockPattern = function(types) {
   var name = types.join('') + "TypePatternLarge";
   var basicStep = 10;
@@ -573,6 +567,7 @@ var createMultiTypeIndicatorPattern = function(types) {
   createMultiTypeBlockPattern(["float", "int"]);
   createMultiTypeBlockPattern(["int", "str"]);
   createMultiTypeBlockPattern(["float", "int", "str"]);
+  createMultiTypeBlockPattern(["range", "str"]);
 
   // temporary
   createMultiTypeIndicatorPattern(["float", "negint"]);

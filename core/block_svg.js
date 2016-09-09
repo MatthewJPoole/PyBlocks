@@ -1493,6 +1493,8 @@ Blockly.BlockSvg.prototype.updateColour = function() {
     if (this.outputsAList()) {
       this.svgBlockPath_.setAttribute('fill', "white");
       var listTypes = this.getOutputTypesByKind().list;
+      listTypes = Blockly.Python.mergeSubtypes(listTypes);
+      console.log("MERGED for ", this.type, " is", listTypes);
       if (listTypes[0] == "any" || listTypes[0] == "matching") {
         fillText = 'url(#' + this.workspace.options.anyTypePatternLargeId + ')';
       }
@@ -1503,7 +1505,6 @@ Blockly.BlockSvg.prototype.updateColour = function() {
         listTypes.sort();
         var typeString = listTypes.join('');
         var fillUrl = this.workspace.options[typeString + 'TypePatternLargeId'];
-        console.log("FILLNUMTEXT1 " + typeString);
         fillText = 'url(#' + fillUrl  + ')';
       }
       for (var i=0; i<3; i++) {
@@ -1513,7 +1514,7 @@ Blockly.BlockSvg.prototype.updateColour = function() {
     else {
       var outputTypes = this.getOutputTypesByKind().basic;
       outputTypes = Blockly.Python.mergeSubtypes(outputTypes);
-
+      console.log("MERGED for ", this.type, " is", outputTypes);
       if (outputTypes[0] == "any" || outputTypes[0] == "matching") {
         fillText = 'url(#' + this.workspace.options.anyTypePatternLargeId + ')';
       }

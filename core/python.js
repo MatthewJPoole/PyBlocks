@@ -106,7 +106,6 @@ Blockly.Python.SUPTYPE_CHECK = {
 // deal with subtypes in a list of types
 Blockly.Python.mergeSubtypes = function(typeList) {
 
-
   // if int is not here but both subtypes are, add int
   var intIndex = typeList.indexOf('int');
   if (intIndex == -1) {
@@ -123,7 +122,7 @@ Blockly.Python.mergeSubtypes = function(typeList) {
     }
   }
 
-  // if int is here, remove the subtypes
+  // if int (or *int) is here, remove the subtypes
   var intIndex = typeList.indexOf('int');
   if (intIndex != -1) {
     for (var subType in Blockly.Python.SUPERTYPES) {
