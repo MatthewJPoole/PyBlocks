@@ -133,6 +133,7 @@ Blockly.Python.mergeSubtypes = function(typeList) {
       }
     }
   }
+  console.log("MERGEST finished " + typeList);
   return typeList;
 };
 

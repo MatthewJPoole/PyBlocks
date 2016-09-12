@@ -1569,6 +1569,7 @@ Blockly.BlockSvg.prototype.updateColour = function() {
     }
     if (indicatorPair.list) {
      var pListTypes = this.getInputTypesByKind(emptySlotNumber).list;
+     pListTypes = Blockly.Python.mergeSubtypes(pListTypes);
      if (pListTypes[0] == "any" || pListTypes[0] == "matching") {
        fillText = 'url(#' + this.workspace.options.anyTypePatternSmallId + ')';
      }
