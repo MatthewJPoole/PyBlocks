@@ -114,7 +114,7 @@ Blockly.BlockSvg.prototype.initSvg = function() {
   if (this.mutator) {
     this.mutator.createIcon();
   }
-  this.updateColour();
+  //this.updateColour();
   this.updateMovable();
   if (!this.workspace.options.readOnly && !this.eventsInit_) {
     Blockly.bindEvent_(this.getSvgRoot(), 'mousedown', this,
@@ -231,7 +231,9 @@ Blockly.BlockSvg.terminateDrag_ = function() {
       selected.moveConnections_(dxy.x, dxy.y);
       delete selected.draggedBubbles_;
       selected.setDragging_(false);
-      selected.render();
+    //  console.log("RENTEST - terminateDrag calls renders");
+  //    selected.render();  ---- why is this here?
+      //selected.updateColour();
       goog.Timer.callOnce(
           selected.snapToGrid, Blockly.BUMP_DELAY / 2, selected);
       goog.Timer.callOnce(
@@ -535,11 +537,11 @@ Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
               previousBlock = previousConnection.targetBlock();
           }
       }
-      else { // this is an expression
-        console.log("DROPPED INTO INPUT ", this_.outputConnection.targetConnection.inputNumber_);
-        this_.checkParentheses();
-        this_.reType();
-      }
+    //  else { // this is an expression
+    //    console.log("DROPPED INTO INPUT ", this_.outputConnection.targetConnection.inputNumber_);
+    //    this_.checkParentheses();
+    //    this_.reType(true);
+    //  }
 
       if (this_.rendered) {
         // Trigger a connection animation.
@@ -576,19 +578,20 @@ Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
   });
 };
 
-Blockly.Block.prototype.reType = function() {
+Blockly.Block.prototype.reType = function(opt_render) {
+  console.log("RENTEST - Entering retype on ", this.type);
   if (!this.workspace) {
     // don't bother if not on workspace
     return;
   }
   var topLevel = this.getTopLevel();
-  console.log("RETYPE, top level: ", topLevel.type);
+  console.log("RENTEST - toplevel type is ", topLevel.type);
   topLevel.restoreFullTypes();
-  console.log("UCOL 1: ", topLevel.typeVecs);
   topLevel.unifyUp();
-  console.log("UCOL 2: ", topLevel.typeVecs);
   topLevel.unifyDown();
-  console.log("UCOL 3: ", topLevel.typeVecs);
+  if (opt_render) {
+    this.renderNoColour();
+  }
   topLevel.updateColourDown();
 };
 
@@ -1479,6 +1482,8 @@ Blockly.BlockSvg.prototype.updateColourDown = function() {
  * Change the colour of a block.
  */
 Blockly.BlockSvg.prototype.updateColour = function() {
+  console.log("RENTEST - Entering updateColour on ", this.type);
+  console.log("RENTEST - this.indicators ", this.indicators);
   if (this.disabled) {
     // Disabled blocks don't have colour.
     return;
@@ -1833,13 +1838,19 @@ Blockly.BlockSvg.prototype.removeDragging = function() {
                        'blocklyDragging');
 };
 
+Blockly.BlockSvg.prototype.render = function(opt_bubble) {
+  this.renderNoColour(opt_bubble);
+  this.updateColour();
+};
+
 /**
  * Render the block.
  * Lays out and reflows a block based on its contents and settings.
  * @param {boolean=} opt_bubble If false, just render this block.
  *   If true, also render block's parent, grandparent, etc.  Defaults to true.
  */
-Blockly.BlockSvg.prototype.render = function(opt_bubble) {
+Blockly.BlockSvg.prototype.renderNoColour = function(opt_bubble) {
+  console.log("RENTEST - Entering renderNoColour on ", this.type);
   Blockly.Field.startCache();
   this.rendered = true;
 
@@ -1854,19 +1865,20 @@ Blockly.BlockSvg.prototype.render = function(opt_bubble) {
   // width that the first label needs to move over by.
 
   // MJP HACK TO GET COLOURS RIGHT
-  this.reType();
+  //this.reType();
 
   var inputRows = this.renderCompute_(cursorX);
   this.renderDraw_(cursorX, inputRows);
 
   // MJP HACK TO GET COLOURS RIGHT
-  this.updateColour();
+  //this.updateColour();
 
   if (opt_bubble !== false) {
+
     // Render all blocks above this one (propagate a reflow).
     var parentBlock = this.getParent();
     if (parentBlock) {
-      parentBlock.render(true);
+      parentBlock.renderNoColour(true);
     } else {
       // Top-most block.  Fire an event to allow scrollbars to resize.
       Blockly.fireUiEvent(window, 'resize');
@@ -2666,6 +2678,7 @@ Blockly.BlockSvg.prototype.renderDrawLeft_ =
   steps.push('z');
 };
 
+// returns true if parameters added or deleted
 Blockly.Block.prototype.checkParentheses = function() {
   var operator = this.operator;
   if (operator) {
@@ -2696,20 +2709,23 @@ Blockly.Block.prototype.checkParentheses = function() {
       // highest precedence operators don't have LPAR and RPAR fields
       var lpar = this.getField("LPAR");
       var rpar = this.getField("RPAR");
-      // add parentheses
-      if (lpar) {
+      // add parentheses if not present
+      if (lpar && lpar.getValue() == "") {
         lpar.setValue("(");
         rpar.setValue(")");
+        return true;
       }
     }
     else {
-      // remove parentheses which may or may not be present
+      // remove parentheses if present
       var lpar = this.getField("LPAR");
       var rpar = this.getField("RPAR");
-      if (lpar) {
-        this.setFieldValue("", "LPAR");
-        this.setFieldValue("", "RPAR");
+      if (lpar && lpar.getValue() == "(") {
+        lpar.setValue("");
+        rpar.setValue("");
+        return true;
       }
     }
   }
+  return false;
 };
