@@ -92,6 +92,7 @@ Blockly.Blocks['python_list_const'] = {
       input.appendField(", ");
     }
     this.fullTypeVecs[0].splice(-1, 0, "matching");
+    this.reType();
     this.moveInputBefore(inputName, "CLOSE");
   },
 
@@ -99,7 +100,8 @@ Blockly.Blocks['python_list_const'] = {
     this.removeInput('ARG' + this.parameterCount);
     this.parameterCount--;
     this.fullTypeVecs[0].splice(-2, 1);
-    this.render();
+    this.reType();
+    //this.render();
   }
 };
 

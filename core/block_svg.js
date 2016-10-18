@@ -1878,7 +1878,8 @@ Blockly.BlockSvg.prototype.renderNoColour = function(opt_bubble) {
     // Render all blocks above this one (propagate a reflow).
     var parentBlock = this.getParent();
     if (parentBlock) {
-      parentBlock.renderNoColour(true);
+      //parentBlock.renderNoColour(true);
+      parentBlock.render();
     } else {
       // Top-most block.  Fire an event to allow scrollbars to resize.
       Blockly.fireUiEvent(window, 'resize');

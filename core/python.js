@@ -58,6 +58,7 @@ Blockly.Python.COLOUR['int'] = green;
 Blockly.Python.COLOUR['range'] = orange;
 Blockly.Python.COLOUR['float'] = blue;
 Blockly.Python.COLOUR['bool'] = magenta;
+Blockly.Python.COLOUR['turtle'] = yellow;
 Blockly.Python.RAINBOW = [red, yellow, green, cyan, blue, magenta, red];
 
 
@@ -141,7 +142,8 @@ Blockly.Python.NEW_VARS = [
     {name: "newIntVariable", type: 'int'},
     {name: "newFloatVariable", type: 'float'},
     {name: "newStringVariable", type: 'str'},
-    {name: "newBoolVariable", type: 'bool'}
+    {name: "newBoolVariable", type: 'bool'},
+    {name: "newTurtleVariable", type: 'turtle'}
   ];
 
 Blockly.Python.NEW_LIST_VARS = [

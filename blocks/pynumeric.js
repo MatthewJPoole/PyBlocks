@@ -68,6 +68,18 @@ Blockly.Blocks['python_int_const'] = {
   }
 };
 
+Blockly.Blocks['python_turtle_contruct'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Turtle()");
+    this.setInputsInline(true);
+    this.setTypeVecs([["turtle"]]);
+    this.setOutput(true);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
 Blockly.Blocks['python_float_const'] = {
   init: function() {
     this.appendDummyInput()
@@ -104,6 +116,8 @@ Blockly.Blocks['python_plus'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+
+
 
 Blockly.Blocks['python_minus'] = {
   init: function() {

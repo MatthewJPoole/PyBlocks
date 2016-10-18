@@ -123,6 +123,8 @@ Blockly.Blocks['python_print'] = {
     else {
       this.moveInputBefore(inputName, "CLOSE");
     }
+    this.reType();
+    this.render();
   },
 
   remove: function() {
@@ -138,6 +140,7 @@ Blockly.Blocks['python_print'] = {
       this.fullTypeVecs[i].splice(this.parameterCount, 1);
     }
     console.log("PRINTIO after", JSON.stringify(this.fullTypeVecs), "\n");
+    this.reType();
     this.render();
   },
 
@@ -154,6 +157,7 @@ Blockly.Blocks['python_print'] = {
     for (var i = 0; i < this.fullTypeVecs.length; i++) {
       this.fullTypeVecs[i].splice(-1, 0, "str");
     }
+    this.reType();
     this.moveInputBefore("END", "CLOSE");
     console.log("PRINTIO after", JSON.stringify(this.fullTypeVecs), "\n");
 
@@ -166,6 +170,7 @@ Blockly.Blocks['python_print'] = {
     for (var i = 0; i < this.fullTypeVecs.length; i++) {
       this.fullTypeVecs[i].splice(-2, 1);
     }
+    this.reType();
     console.log("PRINTIO after", JSON.stringify(this.fullTypeVecs), "\n");
 
   }
@@ -223,7 +228,8 @@ Blockly.Blocks['python_format'] = {
     if (this.parameterCount > 1) {
       input.appendField(", ");
     }
-    this.fullTypeVecs[0].splice(-1, 0, "any");
+    this.fullTypeVecs[0].splice(-1, 0, "any"); // NEEDS FIXING
+    this.reType();
     this.moveInputBefore(inputName, "CLOSE");
   },
 
@@ -231,6 +237,7 @@ Blockly.Blocks['python_format'] = {
     this.removeInput('ARG' + this.parameterCount);
     this.parameterCount--;
     this.fullTypeVecs[0].splice(-2, 1);
+    this.reType();
     this.render();
   }
 };
