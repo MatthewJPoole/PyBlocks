@@ -89,8 +89,8 @@ Blockly.Blocks['python_if'] = {
     this.appendStatementInput(bodyName);
     this.fullTypeVecs[0].unshift("bool");
     console.log("IFSTMT ", this.fullTypeVecs);
+    this.reType();
     if (this.hasElse) {
-
       this.moveInputBefore(conditionName, "ELSE");
       this.moveInputBefore(colonName, "ELSE");
       this.moveInputBefore(bodyName, "ELSE");
@@ -104,6 +104,7 @@ Blockly.Blocks['python_if'] = {
     this.removeInput('BODY' + this.elifCount);
     this.elifCount--;
     this.fullTypeVecs[0].splice(0, 1);
+    this.reType();
     this.render();
   },
 
