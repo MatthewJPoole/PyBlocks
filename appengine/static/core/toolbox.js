@@ -213,11 +213,11 @@ Blockly.Toolbox.prototype.populate_ = function(newTree) {
     rootOut.blocks = [];
     var hasColours = false;
 
-    var banner = document.getElementById('banner'); 
-    banner.innerHTML = 'PyBlocks'; 
+    var banner = document.getElementById('banner');
+    //banner.innerHTML = 'PyBlocks (demo)'; 
 
     function syncTrees(treeIn, treeOut) {
-        
+
         for (var i = 0, childIn; childIn = treeIn.childNodes[i]; i++) {
             if (!childIn.tagName) {
                 // Skip over text.
@@ -243,7 +243,7 @@ Blockly.Toolbox.prototype.populate_ = function(newTree) {
                         childOut.hexColour = '';
                     }
                     if (childIn.getAttribute('expanded') == 'true') {
-                        
+
                         if (childOut.blocks.length) {
                             rootOut.setSelectedItem(childOut);
                         }
@@ -287,39 +287,39 @@ Blockly.Toolbox.prototype.populate_ = function(newTree) {
                             var fillText = '../python/svgs/boolean.svg';
                             break;
                     }
-                   
-                    
+
+
                     switch (childIn.getAttribute('name')) {
                         case 'strings':
-                            banner.innerHTML = banner.innerHTML + '<div id="strings" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
+                            banner.innerHTML = banner.innerHTML + '<div id="strings" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
                             break;
                         case 'booleans':
-                            banner.innerHTML = banner.innerHTML + '<div id="booleans" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
+                            banner.innerHTML = banner.innerHTML + '<div id="booleans" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
                             break;
                         case 'lists':
-                            banner.innerHTML = banner.innerHTML + '<div id="lists" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
+                            banner.innerHTML = banner.innerHTML + '<div id="lists" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
                             break;
                         case 'conversions':
-                            banner.innerHTML = banner.innerHTML + '<div id="conversions" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
+                            banner.innerHTML = banner.innerHTML + '<div id="conversions" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
                             break;
                         case 'tests':
-                            banner.innerHTML = banner.innerHTML + '<div id="tests" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
+                            banner.innerHTML = banner.innerHTML + '<div id="tests" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
                             break;
                         case 'control':
-                            banner.innerHTML = banner.innerHTML + '<div id="control" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
+                            banner.innerHTML = banner.innerHTML + '<div id="control" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
                             break;
                         case 'io':
-                            banner.innerHTML = banner.innerHTML + '<div id="io" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
+                            banner.innerHTML = banner.innerHTML + '<div id="io" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
                             break;
                         case 'misc':
-                            banner.innerHTML = banner.innerHTML + '<div id="misc" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
+                            banner.innerHTML = banner.innerHTML + '<div id="misc" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
                             break;
                         case 'variables':
-                            banner.innerHTML = banner.innerHTML + '<div id="variables" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
+                            banner.innerHTML = banner.innerHTML + '<div id="variables" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
                             break;
                         case 'numeric':
-                            banner.innerHTML = banner.innerHTML + '<div id="numeric" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>'; 
-                    } 
+                            banner.innerHTML = banner.innerHTML + '<div id="numeric" style="position: absolute; left: ' + childIn.getAttribute('x') +  'px; top: ' + childIn.getAttribute('y') + 'px; z-index: 1002;"> <object width="20" height="20" data="' + fillText + '" type="image/svg+xml"></object></div>';
+                    }
                     break;
             }
         }
@@ -552,7 +552,7 @@ Blockly.Toolbox.TreeNode.prototype.onMouseDown = function(e) {
                 document.getElementById('io').style.top = parseInt(document.getElementById('io').style.top.slice(0, -2)) - 25 + 'px';
                 document.getElementById('misc').style.top = parseInt(document.getElementById('misc').style.top.slice(0, -2)) - 25 + 'px';
                 document.getElementById('variables').style.top = parseInt(document.getElementById('variables').style.top.slice(0, -2)) - 25 + 'px';
-                break; 
+                break;
             case '<block type="python_list_empty"></block>':
                 document.getElementById('conversions').style.top = parseInt(document.getElementById('conversions').style.top.slice(0, -2)) - 50 + 'px';
                 document.getElementById('tests').style.top = parseInt(document.getElementById('tests').style.top.slice(0, -2)) - 50 + 'px';
@@ -611,7 +611,7 @@ Blockly.Toolbox.TreeNode.prototype.onMouseDown = function(e) {
         this.select();
     }
 
-    
+
     this.updateRow();
 };
 

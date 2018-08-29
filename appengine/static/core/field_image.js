@@ -109,11 +109,10 @@ Blockly.FieldImage.prototype.init = function(block) {
     Blockly.Tooltip.bindMouseEvents(topElement);
 
     if (this.sourceBlock_.type == 'python_start') {
-        Blockly.bindEvent_(this.fieldGroup_, 'click', this, function(e) {
-            runFull();
+        Blockly.bindEvent_(this.fieldGroup_, 'mouseup', this, function(e) {
+          runFull();
         });
     }
-
 };
 
 /**

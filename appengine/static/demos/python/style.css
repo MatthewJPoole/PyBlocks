@@ -98,7 +98,7 @@ table#typeTable {
 
 
 #dropdownVar {
-    
+
 }
 
 #buttonArea {
@@ -360,18 +360,17 @@ table#typeTable {
     width: 500px !important;
 }
 
-#startIcon {
+#startBlockButton {
     opacity: 0.75;
-    x: 35;
 }
 
-#startIcon:hover {
+#startBlockButton:hover {
     cursor: pointer;
     opacity: 1.0;
 }
 
-#startIcon:active {
-    y: 2;    
+#startBlockButton:active {
+    y: 2;
 }
 
 .blocklyMainBackground {
@@ -383,7 +382,7 @@ table#typeTable {
 }
 
 .int {
-    color: #FBBC05; 
+    color: #FBBC05;
 }
 
 .float {
@@ -405,4 +404,3 @@ table#typeTable {
 .turtle {
     color: #00EEEE;
 }
-

@@ -532,8 +532,8 @@ Blockly.getMainWorkspaceMetrics_ = function() {
     // Set the margin to match the flyout's margin so that the workspace does
     // not jump as blocks are added.
     var MARGIN = Blockly.Flyout.prototype.CORNER_RADIUS - 1;
-    var viewWidth = svgSize.width - MARGIN;
-    var viewHeight = svgSize.height - MARGIN;
+    var viewWidth = svgSize.width - MARGIN - 3; // 3 = PyBlocks fix
+    var viewHeight = svgSize.height - MARGIN - 7; // 7 = PyBlocks fix
     try {
         var blockBox = this.getCanvas().getBBox();
     } catch (e) {
@@ -548,18 +548,18 @@ Blockly.getMainWorkspaceMetrics_ = function() {
     if (this.scrollbar) {
         // Add a border around the content that is at least half a screenful wide.
         // Ensure border is wide enough that blocks can scroll over entire screen.
-        // PyBlocks
+        // PyBlocks fixed leftEdge
         //var leftEdge = Math.min(contentX - viewWidth / 2,
-        //                        contentX + contentWidth - viewWidth);
-        var leftEdge = -5;
+      //                          contentX + contentWidth - viewWidth);
+        var leftEdge = -10;
         var rightEdge = Math.max(contentX + contentWidth + viewWidth / 2,
             contentX + viewWidth);
-        // PyBlocks
-        //var topEdge = Math.min(contentY - viewHeight / 2,
+        // PyBlocks fixed topEdge
+      //  var topEdge = Math.min(contentY - viewHeight / 2,
         //                     contentY + contentHeight - viewHeight);
-        var topEdge = -5;
+        var topEdge = -25;
         var bottomEdge = Math.max(contentY + contentHeight + viewHeight / 2,
-            contentY + viewHeight);
+           contentY + viewHeight);
     } else {
         var leftEdge = blockBox.x;
         var rightEdge = leftEdge + blockBox.width;

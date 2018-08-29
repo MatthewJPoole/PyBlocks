@@ -133,15 +133,17 @@ Blockly.Css.setCursor = function(cursor) {
 Blockly.Css.CONTENT = [
     '.blocklySvg {',
     'background-color: #282c34;', // CCCCCCCCCCCC
-  //  'background-color: #ffffff;',
     'outline: none;',
     'overflow: hidden;', /* IE overflows by default. */
-    '-webkit-border-radius: 6;',
+    'position: absolute;',
+    'display: block;',
+
+  /*  '-webkit-border-radius: 6;',
     '-moz-border-radius: 6;',
     'border-radius: 6px;',
     '-moz-box-shadow: inset 5px 5px 5px rgba(255, 255, 255, .2), 0 10px 6px -6px #777;',
     '-webkit-box-shadow: inset 5px 5px 5px rgba(255, 255, 255, .2), 0 10px 6px -6px #777;',
-    'box-shadow: inset 5px 5px 5px rgba(255, 255, 255, .2), 0 10px 6px -6px #777;',
+    'box-shadow: inset 5px 5px 5px rgba(255, 255, 255, .2), 0 10px 6px -6px #777;',*/
     '}',
 
     '.blocklyWidgetDiv {',
@@ -456,7 +458,7 @@ Blockly.Css.CONTENT = [
     'overflow-x: visible;',
     'overflow-y: auto;',
     'position: absolute;',
-    '-webkit-border-top-right-radius: 6;',
+  /*  '-webkit-border-top-right-radius: 6;',
     '-moz-border-topright: 6;',
     'border-top-right-radius: 6px;',
     '-webkit-border-bottom-right-radius: 6;',
@@ -464,7 +466,7 @@ Blockly.Css.CONTENT = [
     'border-bottom-right-radius: 6px;',
     '-webkit-box-shadow: inset 5px 5px 5px rgba(255, 255, 255, .2), 0 10px 6px -6px #777;',
     '-moz-box-shadow: inset 5px 5px 5px rgba(255, 255, 255, .2), 0 10px 6px -6px #777;',
-    'box-shadow: inset 0px 1.5px 1px rgba(66, 50, 50, .3), 0 10px 6px -6px #777;',
+    'box-shadow: inset 0px 1.5px 1px rgba(66, 50, 50, .3), 0 10px 6px -6px #777;', */
     'min-width: 220px;',
     '}',
 

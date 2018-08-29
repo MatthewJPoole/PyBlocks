@@ -35,7 +35,9 @@ Blockly.Blocks['python_start'] = {
 
     init: function() {
         Blockly.BlockSvg.START_HAT = true;
-        this.appendDummyInput().appendField( new Blockly.FieldImage('../../media/play_icon.png', 32, 32, 'startIcon', '*'));
+        var triangle =  new Blockly.FieldImage('../../media/play.png', 32, 32, 'startBlockButton', '*');
+        var triangleInput = this.appendDummyInput().appendField(triangle)
+        triangleInput.setAlign(Blockly.ALIGN_CENTRE);
         //var runIcon = new Blockly.Icon(this);
         //runIcon.createIcon();
         //this.appendDummyInput().appendField(new Blockly.Warning(this));

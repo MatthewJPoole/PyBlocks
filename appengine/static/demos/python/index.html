@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>PyBlocks</title>
+    <!-- <title>Python Block Editor (demo)</title> -->
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="/storage.js"></script>
     <script src="../../blockly_uncompressed.js"></script>
@@ -98,14 +98,14 @@
                         <option value="1">Lists enabled</option>
                         <option value="2">Everything enabled</option>
                     </select> -->
-                            <!--<button type="button" class="fancyButtons" id="modalBtn">Var</button>-->
-                            <button type="button" class="fancyButtons" id="run" onclick="runFull()">Run</button>
-                            <button type="button" class="fancyButtons" onclick="linkBlocks()">Link</button>
-                            <button type="button" class="fancyButtons" onclick="saveBlocks()">Save</button>
+                            <button type="button" class="fancyButtons" id="modalBtn">Var</button>
+                            <button type="button" class="fancyButtons" id="run" onclick="runFull()">Run Program</button>
+                           <button type="button" class="fancyButtons" onclick="linkBlocks()">Link</button>
+                           <button type="button" class="fancyButtons" onclick="saveBlocks()">Save</button>
                             <button type="button" class="fancyButtons" onclick="initLoad(createPicker)">Load</button>
-                            <button type="button" class="fancyButtons" onclick="copyToClipboard()">Copy</button>
-                            <button type="button" class="fancyButtons" onclick="reset()">Reset</button>
-                            <button type="button" class="fancyButtons" onclick="popupWindow('help.html', 'PythonBlocks Help', 'window', '835', '565')">Help</button>
+                            <button type="button" class="fancyButtons" onclick="copyToClipboard()">Copy Program</button>
+                          <button type="button" class="fancyButtons" onclick="reset()">Delete Program</button>
+                         <button type="button" class="fancyButtons" onclick="popupWindow('help.html', 'PythonBlocks Help', 'window', '835', '565')">Help</button>
                             <button type="button" class="fancyButtons" onclick="popupWindow('about.html', 'About', 'window', '400', 300)">About</button>
                             <button id="turtleButton" type="button" class="fancyButtons" onclick="toggleTurtle()"></button>
                         </div>

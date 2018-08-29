@@ -107,7 +107,7 @@ function runFull() {
 
         }, 500);
     } else if (!generateCode()) {
-        alert('You need to have at least one statement block attached to the start block.')
+        // alert('You need to have at least one statement block attached to the start block.')
     } else {
         alert('Errors found! Please look for the warning symbols for more information.');
     }
@@ -617,7 +617,7 @@ function init() {
         BlocklyStorage.retrieveXml(window.location.hash.substring(1));
     } else {
         var xml =
-            '<xml><block id="startBlock" type="python_start" deletable="false" movable="false" x="2" y="17"></block></xml>';
+            '<xml><block id="startBlock" type="python_start" deletable="false" movable="false" x="0" y="0"></block></xml>';
         Blockly.Xml.domToWorkspace(workspace, Blockly.Xml.textToDom(xml));
 
     }
@@ -644,7 +644,7 @@ function init() {
         var interpreter = document.getElementById("codeArea");
 
         setTimeout(function() {
-            document.getElementById('startIcon').innerHTML = document.getElementById('startIcon').innerHTML + '<span id="startIconSpan">test</span>';
+            document.getElementById('startBlockButton').innerHTML = document.getElementById('startBlockButton').innerHTML + '<span id="startBlockButtonSpan">test</span>';
         }, 150);
 
         modalBtn.onclick = function() {
